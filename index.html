@@ -5,6 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>AI CHECKOUT</title>
 <style>
+/* 한글은 Paperlogy, 영문·숫자는 기존 Courier New를 유지한다. */
+@font-face{
+  font-family:'PaperlogyKR';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-4Regular.woff2') format('woff2');
+  unicode-range:U+1100-11FF,U+3130-318F,U+A960-A97F,U+AC00-D7AF,U+D7B0-D7FF;
+}
+@font-face{
+  font-family:'PaperlogyKR';
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-6SemiBold.woff2') format('woff2');
+  unicode-range:U+1100-11FF,U+3130-318F,U+A960-A97F,U+AC00-D7AF,U+D7B0-D7FF;
+}
+@font-face{
+  font-family:'PaperlogyKR';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-7Bold.woff2') format('woff2');
+  unicode-range:U+1100-11FF,U+3130-318F,U+A960-A97F,U+AC00-D7AF,U+D7B0-D7FF;
+}
 :root{
   --bg:#ffffff;--bg2:#f8f9fa;--bg3:#f0f2f4;
   --border:#e5e7eb;--border2:#d1d5db;
@@ -14,7 +39,8 @@
   --red:#dc2626;--text:#111827;--text-dim:#6b7280;--text-dark:#9ca3af;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-weight:bold;}
-html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;color:var(--text);overflow:hidden;}
+html,body{height:100%;background:var(--bg);font-family:'PaperlogyKR','Courier New',monospace;color:var(--text);overflow:hidden;}
+body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 
 .app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
 
@@ -260,30 +286,30 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
 /* ── 캡처 횟수 바 ── */
 .capture-bar{
   flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
-  padding:6px 12px;background:var(--yellow-bg);border-bottom:1px solid #fde68a;
-  gap:8px;
+  padding:9px 14px;background:var(--yellow-bg);border-bottom:1px solid #fde68a;
+  gap:10px;
 }
-.capture-info{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.capture-label{font-size:15px;color:#92400e;letter-spacing:1px;}
+.capture-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.capture-label{font-size:17px;color:#92400e;letter-spacing:1px;}
 .capture-dots{display:flex;gap:4px;}
 .cdot{width:10px;height:10px;border-radius:50%;background:var(--yellow);transition:background .3s;}
 .cdot.used{background:var(--border2);}
-.capture-nums{font-size:17px;font-weight:bold;color:#92400e;letter-spacing:1px;}
-.capture-right{display:flex;align-items:center;gap:6px;}
-.round-badge{font-size:15px;letter-spacing:1px;padding:2px 8px;background:#fff;border:1px solid #fde68a;border-radius:3px;color:#92400e;font-weight:bold;}
-.btn-next-round{padding:4px 10px;background:var(--yellow);border:none;border-radius:4px;color:#fff;font-size:15px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;letter-spacing:1px;transition:background .2s;}
+.capture-nums{font-size:19px;font-weight:bold;color:#92400e;letter-spacing:1px;}
+.capture-right{display:flex;align-items:center;gap:9px;}
+.round-badge{font-size:17px;letter-spacing:1px;padding:6px 11px;background:#fff;border:1px solid #fde68a;border-radius:7px;color:#92400e;font-weight:bold;}
+.btn-next-round{min-height:44px;padding:9px 18px;background:var(--yellow);border:none;border-radius:8px;color:#fff;font-size:18px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;letter-spacing:1px;transition:background .2s;}
 .btn-next-round:hover{background:#d97706;}
 /* 2026-08-18 추가(세린님 지시): "다음 라운드" 왼쪽의 "정산" 버튼 — 라운드를 넘기지 않고
    현재 라운드 상태만 확인(고객 현황 업데이트 + 정산 팝업)하도록 하는 보조 버튼이라
    "다음 라운드"(진행/확정 액션)와 시각적으로 구분되게 중립 톤으로 둔다. */
-.btn-settle-round{padding:4px 10px;background:#fff;border:1.5px solid var(--border2);border-radius:4px;color:var(--text-dim);font-size:15px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;letter-spacing:1px;transition:background .2s;}
+.btn-settle-round{min-height:44px;padding:9px 16px;background:#fff;border:1.5px solid var(--border2);border-radius:8px;color:var(--text-dim);font-size:17px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;letter-spacing:1px;transition:background .2s;}
 .btn-settle-round:hover{background:#f3f4f6;}
 .capture-bar.exhausted{background:#fef2f2;border-bottom-color:#fca5a5;}
 .capture-bar.exhausted .capture-label,.capture-bar.exhausted .capture-nums{color:var(--red);}
 
 /* VISION */
 .vision-status{flex-shrink:0;padding:5px 12px;border-bottom:1px solid var(--border);}
-.status-pill{font-size:15px;letter-spacing:1.5px;padding:3px 9px;border-radius:3px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dark);display:inline-block;transition:all .3s;}
+.status-pill{font-size:16px;letter-spacing:1px;padding:6px 11px;border-radius:7px;background:var(--bg3);border:1px solid var(--border);color:var(--text-dark);display:inline-block;transition:all .3s;}
 .status-pill.scanning{background:var(--yellow-bg);border-color:var(--yellow);color:#92400e;animation:blink 1s infinite;}
 .status-pill.done{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);animation:none;}
 .status-pill.partial{background:var(--yellow-bg);border-color:var(--yellow);color:#92400e;animation:none;}
@@ -301,21 +327,21 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
 /* ── 상품 블록 ── */
 .obj-card{
   background:#fff;border:2px solid var(--border);border-radius:10px;
-  padding:6px 4px 5px;
+  padding:10px 8px 8px;
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;
-  gap:3px;position:relative;
+  gap:7px;position:relative;
   transition:border-color .3s,background .3s,box-shadow .3s;
   min-height:0;cursor:default;
 }
 .obj-card.success{border-color:#16a34a;background:#f0fdf4;box-shadow:0 0 0 2px #16a34a,0 0 14px rgba(22,163,74,0.45);}
 .obj-card.fail{border-color:#dc2626;background:#fff1f1;box-shadow:0 0 0 2px #dc2626,0 0 14px rgba(220,38,38,0.35);}
 
-.obj-icon{font-size:28px;line-height:1;width:36px;height:36px;border-radius:8px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,border-color .3s;}
+.obj-icon{font-size:clamp(34px,3.2vw,44px);line-height:1;width:clamp(46px,4.2vw,58px);height:clamp(46px,4.2vw,58px);border-radius:11px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .3s,border-color .3s;}
 .obj-card.success .obj-icon{background:#dcfce7;border-color:#86efac;}
 .obj-card.fail   .obj-icon{background:#fee2e2;border-color:#fca5a5;}
 
-.obj-name{font-size:15.5px;font-weight:bold;color:var(--text);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;line-height:1.2;}
-.obj-price-sm{font-size:16px;font-weight:bold;color:var(--primary);letter-spacing:.3px;white-space:nowrap;text-align:center;}
+.obj-name{font-size:clamp(17px,1.55vw,20px);font-weight:bold;color:var(--text);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;line-height:1.25;}
+.obj-price-sm{font-size:clamp(17px,1.5vw,19px);font-weight:bold;color:var(--primary);letter-spacing:.3px;white-space:nowrap;text-align:center;}
 
 /* 스트라이프 패턴 표시 (카드 내) */
 .obj-pattern{display:flex;gap:2px;justify-content:center;align-items:center;height:12px;}
@@ -325,14 +351,14 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
 .obj-pattern-txt{font-size:12px;color:var(--text-dark);letter-spacing:.3px;}
 
 /* ── LED 표시등 ── */
-.obj-led{width:12px;height:12px;border-radius:50%;background:#d1d5db;border:1.5px solid #9ca3af;transition:background .3s,box-shadow .3s,border-color .3s;flex-shrink:0;}
+.obj-led{width:14px;height:14px;border-radius:50%;background:#d1d5db;border:1.5px solid #9ca3af;transition:background .3s,box-shadow .3s,border-color .3s;flex-shrink:0;}
 .obj-led.green{background:#22c55e;border-color:#16a34a;box-shadow:0 0 6px 2px rgba(34,197,94,0.7),0 0 2px rgba(34,197,94,1);animation:ledGreen .5s ease-out;}
 @keyframes ledGreen{0%{box-shadow:0 0 0 0 rgba(34,197,94,0);background:#22c55e;}50%{box-shadow:0 0 12px 5px rgba(34,197,94,0.8);}100%{box-shadow:0 0 6px 2px rgba(34,197,94,0.7);}}
 .obj-led.red{background:#ef4444;border-color:#dc2626;box-shadow:0 0 6px 2px rgba(239,68,68,0.65),0 0 2px rgba(239,68,68,1);animation:ledRed .4s ease-out;}
 @keyframes ledRed{0%{box-shadow:0 0 0 0 rgba(239,68,68,0);background:#ef4444;}50%{box-shadow:0 0 10px 4px rgba(239,68,68,0.8);}100%{box-shadow:0 0 6px 2px rgba(239,68,68,0.65);}}
 
 /* 단계 뱃지 */
-.stage-badge{font-size:13px;letter-spacing:.3px;padding:1px 4px;border-radius:3px;font-weight:bold;width:100%;text-align:center;white-space:nowrap;}
+.stage-badge{font-size:15px;line-height:1.35;letter-spacing:.3px;padding:4px 6px;border-radius:5px;font-weight:bold;width:100%;text-align:center;white-space:nowrap;box-sizing:border-box;}
 .stage-0{background:var(--bg3);color:var(--text-dark);}
 .stage-1{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
 .stage-2{background:#f0fdf4;color:#15803d;border:1px solid #86efac;}
@@ -469,19 +495,19 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
   .cam-error{font-size:15px;max-width:420px;padding:10px 16px;}
   .right-panel{min-height:0;flex:none;}
   .tab-btn{font-size:18px;padding:13px 0;}
-  .capture-bar{padding:9px 18px;}
-  .capture-label{font-size:16px;}
-  .capture-nums{font-size:18px;}
-  .round-badge{font-size:16px;}
-  .btn-next-round{font-size:16px;padding:7px 14px;}
-  .btn-settle-round{font-size:16px;padding:7px 14px;}
+  .capture-bar{padding:11px 18px;}
+  .capture-label{font-size:18px;}
+  .capture-nums{font-size:20px;}
+  .round-badge{font-size:17px;padding:7px 12px;}
+  .btn-next-round{font-size:18px;padding:10px 18px;}
+  .btn-settle-round{font-size:17px;padding:10px 16px;}
   .cdot{width:11px;height:11px;}
   .obj-list{flex:none;overflow:visible;padding:10px 16px;gap:10px;grid-template-rows:repeat(2,auto);}
-  .obj-card{padding:12px 8px 10px;border-radius:12px;}
-  .obj-icon{width:46px;height:46px;font-size:34px;border-radius:10px;}
-  .obj-name{font-size:16px;}
-  .obj-price-sm{font-size:16px;}
-  .stage-badge{font-size:14px;}
+  .obj-card{padding:14px 10px 11px;border-radius:12px;gap:8px;}
+  .obj-icon{width:56px;height:56px;font-size:42px;border-radius:12px;}
+  .obj-name{font-size:19px;}
+  .obj-price-sm{font-size:18px;}
+  .stage-badge{font-size:16px;padding:5px 7px;}
   .obj-led{width:14px;height:14px;}
   .score-bar{padding:10px 18px 14px;}
   .score-lbl{font-size:16px;}
@@ -509,11 +535,14 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
   .btn-sm{padding:10px 18px;font-size:16px;}
   .cam-hint{font-size:15px;}
   .tab-btn{font-size:17px;padding:12px 0;}
-  .capture-label,.capture-nums,.round-badge,.btn-next-round,.btn-settle-round{font-size:16px;}
+  .capture-label,.round-badge,.btn-settle-round{font-size:17px;}
+  .capture-nums,.btn-next-round{font-size:18px;}
   /* 상품명이 잘리지 않도록 행 높이를 내용에 맞춤 + 하단 총액 영역을 줄여 그리드 공간 확보 */
   .obj-list{grid-template-rows:repeat(2,auto);}
-  .obj-icon{width:42px;height:42px;font-size:31px;}
-  .obj-name,.obj-price-sm{font-size:16px;}
+  .obj-icon{width:52px;height:52px;font-size:39px;}
+  .obj-name{font-size:18px;}
+  .obj-price-sm{font-size:17px;}
+  .stage-badge{font-size:15px;padding:4px 6px;}
   .score-bar{padding:6px 16px 8px;}
   .score-lbl{font-size:13px;margin-bottom:2px;}
   .score-display{padding:4px 12px;}
@@ -536,26 +565,38 @@ html,body{height:100%;background:var(--bg);font-family:'Courier New',monospace;c
   .obj-card{padding:4px 3px 3px;gap:2px;}
 }
 
+/* 태블릿 메인 상품 카드: 현재 여백 비율은 유지하고 줄바꿈·넘침만 방지 */
+@media (min-width:900px) and (orientation:landscape){
+  .capture-label,.capture-nums,.status-pill,.round-badge,.btn-settle-round,.btn-next-round{white-space:nowrap;}
+  .obj-card{overflow:hidden;}
+}
+
+@media (min-width:601px) and (max-width:1024px) and (orientation:portrait){
+  .capture-label,.capture-nums,.status-pill,.round-badge,.btn-settle-round,.btn-next-round{white-space:nowrap;}
+  .obj-card{overflow:hidden;}
+  .stage-badge{font-size:15px;padding-left:4px;padding-right:4px;}
+}
+
 /* 태블릿·모바일 공통: 터치 반응성 (300ms 탭 지연 제거) */
 button{touch-action:manipulation;}
 
 /* ── 고객 선택 → 체크아웃 (2026-08-16 추가) ── */
 /* 내 고객카드 큐 (칩 목록) */
-.my-customer-queue{flex-shrink:0;display:none;flex-wrap:wrap;gap:6px;padding:8px 12px;background:var(--bg2);border-bottom:1px solid var(--border);}
+.my-customer-queue{flex-shrink:0;display:none;flex-wrap:wrap;gap:10px;padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border);}
 /* 2026-08-16b: 칩을 버튼으로 바꿔 "지금 계산할 고객" 전환 가능하게 함 */
-.mcq-chip{font-size:12px;padding:4px 9px;border-radius:12px;background:#fff;border:1.5px solid var(--border2);color:var(--text-dim);letter-spacing:.3px;cursor:pointer;font-family:'Courier New',monospace;}
+.mcq-chip{min-height:40px;font-size:15px;padding:8px 14px;border-radius:20px;background:#fff;border:1.5px solid var(--border2);color:var(--text-dim);letter-spacing:.3px;cursor:pointer;font-family:'Courier New',monospace;}
 .mcq-chip.active{background:var(--primary-dim);border-color:var(--primary);color:var(--primary);}
 /* 2026-08-16k 추가: FIFO 순서상 아직 차례가 아닌 고객 칩 — 잠금 표시 */
 .mcq-chip.mcq-locked{opacity:.5;}
-.mcq-empty{font-size:12px;color:var(--text-dark);}
+.mcq-empty{font-size:14px;color:var(--text-dark);}
 
 /* 신뢰도-1 배지(빨간불 누적 표시) — 라운드 배지 옆 */
 .trust-badge{display:none;align-items:center;font-size:14px;letter-spacing:.5px;color:var(--red);}
 
 /* 고객카드 구매 바 */
-.customer-shop-bar{flex-shrink:0;padding:8px 12px;border-bottom:1px solid var(--border);background:#fff;}
-.customer-shop-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.customer-shop-row .btn-sm{white-space:nowrap;}
+.customer-shop-bar{flex-shrink:0;padding:10px 16px;border-bottom:1px solid var(--border);background:#fff;}
+.customer-shop-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.customer-shop-row .btn-sm{min-height:42px;padding:9px 14px;font-size:15px;white-space:nowrap;}
 #buyPasswordRow,#buyUnlockedRow{display:none;align-items:center;gap:8px;flex-wrap:wrap;}
 #buyPasswordInput{flex:1;min-width:110px;padding:6px 10px;border:1px solid var(--border2);border-radius:5px;font-family:'Courier New',monospace;font-size:14px;letter-spacing:2px;}
 
@@ -586,42 +627,44 @@ button{touch-action:manipulation;}
 /* 2026-08-16d 추가: 줄 배치/줄 교체 (AI계산대 줄 ↔ 직원 계산대 줄 드래그) */
 .la-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,.55);z-index:970;align-items:center;justify-content:center;padding:16px;}
 .la-box{background:#fff;border-radius:14px;width:100%;max-width:480px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25);}
-.la-header{flex-shrink:0;padding:16px 18px 10px;border-bottom:1px solid var(--border);}
-.la-title{font-size:16px;font-weight:bold;color:var(--text);margin-bottom:4px;}
-.la-hint{font-size:12px;color:var(--text-dim);line-height:1.5;}
-.la-staging{flex-shrink:0;display:flex;flex-wrap:wrap;gap:6px;padding:10px 18px;background:#fffbeb;border-bottom:1px dashed #fcd34d;min-height:20px;transition:background .15s,outline .15s;}
+#lineAssignOverlay .la-box{width:760px;max-width:calc(100vw - 24px);height:720px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);flex:0 0 auto;}
+.la-header{flex-shrink:0;padding:20px 22px 16px;border-bottom:1px solid var(--border);}
+.la-title{font-size:20px;font-weight:bold;color:var(--text);margin-bottom:7px;line-height:1.35;}
+.la-hint{font-size:15px;color:var(--text-dim);line-height:1.55;}
+.la-staging{flex-shrink:0;display:flex;flex-wrap:wrap;gap:10px;padding:14px 22px;background:#fffbeb;border-bottom:1px dashed #fcd34d;min-height:20px;transition:background .15s,outline .15s;}
 .la-staging:empty{display:none;}
+.la-staging .la-chip{flex:1 1 calc(50% - 5px);min-width:calc(50% - 5px);}
 /* 2026-08-18 추가(세린님 지시): staging도 드롭존이 됐으므로, 드래그해서 위에 올릴 때 강조 표시 */
 .la-staging.la-dragover{background:#fef3c7;outline:2px dashed #f59e0b;}
-.la-columns{flex:1;display:flex;overflow-y:auto;min-height:160px;}
-.la-col{flex:1;display:flex;flex-direction:column;min-width:0;padding:10px 12px;border-right:1px solid var(--border);}
+.la-columns{flex:1;display:flex;overflow:hidden;min-height:0;}
+.la-col{flex:1;display:flex;flex-direction:column;min-width:0;padding:14px 16px;border-right:1px solid var(--border);}
 .la-col:last-child{border-right:none;}
-.la-col-title{font-size:12px;font-weight:bold;color:var(--text-dim);margin-bottom:8px;display:flex;justify-content:space-between;gap:6px;}
+.la-col-title{min-height:24px;font-size:15px;font-weight:bold;color:var(--text-dim);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .la-count-over{color:#dc2626;} /* 2026-08-16f: swap 드래그 중 한도 초과 시 빨갛게 표시 */
-.la-col-body{flex:1;display:flex;flex-direction:column;gap:6px;min-height:140px;padding:6px;border-radius:8px;background:var(--bg2);transition:background .15s,outline .15s;}
+.la-col-body{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;padding:8px;border-radius:10px;background:var(--bg2);overflow-y:auto;transition:background .15s,outline .15s;}
 .la-col-body.la-dragover{background:var(--primary-dim);outline:2px dashed var(--primary);}
-.la-chip{padding:9px 10px;background:#fff;border:1.5px solid var(--border2);border-radius:8px;font-size:13px;text-align:center;cursor:grab;touch-action:none;user-select:none;}
+.la-chip{min-height:58px;padding:12px 14px;box-sizing:border-box;background:#fff;border:1.5px solid var(--border2);border-radius:9px;font-size:15px;line-height:1.4;text-align:center;cursor:grab;touch-action:none;user-select:none;display:flex;align-items:center;justify-content:center;}
 .la-chip-ghost{opacity:.92;box-shadow:0 6px 20px rgba(0,0,0,.3);}
 /* 2026-08-16e 추가: 직원 계산대 줄 카드의 "완료" 버튼 */
 .la-chip-staff{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;}
-.la-chip-title{flex:1;min-width:0;}
-.la-chip-done{flex-shrink:0;padding:5px 10px;font-size:12px;font-weight:bold;border:none;border-radius:6px;background:var(--green,#16a34a);color:#fff;cursor:pointer;touch-action:manipulation;}
+.la-chip-title{flex:1;min-width:0;text-align:center;}
+.la-chip-done{flex-shrink:0;padding:7px 12px;font-size:13px;font-weight:bold;border:none;border-radius:6px;background:var(--green,#16a34a);color:#fff;cursor:pointer;touch-action:manipulation;}
 .la-chip-done:disabled{background:#cbd5e1;color:#64748b;cursor:not-allowed;}
 /* 2026-08-16i 추가: "대가족 카드" 강조 스타일 */
 .la-chip-bigfamily{background:#fef3c7;border-color:#f59e0b;}
 /* 2026-08-17 추가(세린님 지시): 직원 줄 ↔ AI계산대 줄 이동 횟수 표시 — 3회 초과(4회째부터)면 경고색 */
-.la-move-count{font-size:11px;color:var(--text-dim);font-weight:normal;}
+.la-move-count{font-size:12px;color:var(--text-dim);font-weight:normal;}
 .la-move-count-warn{color:#dc2626;font-weight:bold;}
 /* 2026-08-17 추가: "고객 줄 현황"/"새 고객 배치하기" 화면의 이동 페널티 안내 문구 */
 .la-hint-rule{color:#b45309;margin-top:4px;}
-.la-empty{font-size:12px;color:var(--text-dark);text-align:center;padding:14px 0;}
+.la-empty{font-size:14px;color:var(--text-dark);text-align:center;padding:20px 0;}
 /* 2026-08-16e 추가: 이번 라운드 완료 처리된 직원줄 카드 — 복구 가능 목록 */
 .la-finished{display:none;flex-direction:column;gap:6px;padding:10px 18px;background:#eff6ff;border-top:1px solid var(--border);max-height:140px;overflow-y:auto;}
 .la-finished-label{font-size:11px;color:#2563eb;font-weight:bold;}
 .la-finished-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;background:#fff;border:1.5px solid #93c5fd;border-radius:8px;font-size:13px;}
 .la-chip-restore{flex-shrink:0;padding:5px 10px;font-size:12px;font-weight:bold;border:none;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer;touch-action:manipulation;}
-.la-footer{flex-shrink:0;padding:10px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;}
-.la-footer button{padding:10px 22px;border:none;border-radius:7px;font-size:14px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;}
+.la-footer{flex-shrink:0;min-height:76px;padding:12px 22px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:12px;}
+.la-footer button{min-width:150px;min-height:52px;padding:12px 26px;border:none;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer;font-family:'Courier New',monospace;}
 .la-footer button:disabled{opacity:.4;cursor:not-allowed;}
 /* 2026-08-16k 추가: "처리 고객 현황" 목록 */
 .ps-list{flex:1;overflow-y:auto;padding:10px 18px;display:flex;flex-direction:column;gap:8px;min-height:120px;max-height:60vh;}
@@ -632,23 +675,26 @@ button{touch-action:manipulation;}
 
 /* 고객 선택 팝업(모달) — roundDraw/targetSelect/purchase 3가지 모드 공유 */
 .cp-overlay{display:none;position:fixed;inset:0;background:rgba(17,24,39,.55);z-index:900;align-items:center;justify-content:center;padding:16px;}
-.cp-box{background:#fff;border-radius:14px;width:100%;max-width:460px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25);}
-.cp-header{flex-shrink:0;padding:16px 18px 10px;border-bottom:1px solid var(--border);}
-.cp-title{font-size:17px;color:var(--primary);letter-spacing:.5px;}
-.cp-hint{font-size:13px;color:var(--text-dim);margin-top:4px;line-height:1.4;}
-.cp-counter{font-size:12px;color:var(--text-dim);margin-top:6px;}
-.cp-tabs{display:none;flex-shrink:0;border-bottom:1px solid var(--border);}
-.cp-tab{flex:1;padding:9px 0;background:transparent;border:none;cursor:pointer;font-family:'Courier New',monospace;font-size:14px;color:var(--text-dark);border-bottom:3px solid transparent;margin-bottom:-1px;}
-.cp-tab.active{color:var(--primary);border-bottom-color:var(--yellow);font-weight:bold;}
-.cp-body{flex:1;overflow-y:auto;padding:12px 16px;}
-.cp-list{display:none;grid-template-columns:1fr 1fr;gap:8px;}
-.cp-card{padding:10px 8px;font-size:13px;line-height:1.35;text-align:left;border:1.5px solid var(--border2);border-radius:8px;background:#fff;cursor:pointer;font-family:'Courier New',monospace;color:var(--text);}
+.cp-box{background:#fff;border-radius:14px;width:760px;max-width:calc(100vw - 24px);height:800px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);flex:0 0 auto;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25);}
+.cp-header{flex-shrink:0;padding:18px 20px 16px;border-bottom:1px solid #f3d36a;background:#fff4c7;box-shadow:inset 0 4px 0 var(--yellow);}
+.cp-title-row{display:flex;align-items:center;gap:10px;min-width:0;}
+.cp-round-chip{display:none;align-items:center;justify-content:center;flex-shrink:0;padding:5px 9px;border:1px solid #f2c94c;border-radius:999px;background:#fff;color:#92400e;font-size:12px;letter-spacing:.2px;box-shadow:0 1px 3px rgba(146,64,14,.08);}
+.cp-title{font-size:18px;color:var(--primary);letter-spacing:.5px;line-height:1.3;}
+.cp-hint{font-size:14px;color:#596275;margin-top:7px;line-height:1.45;}
+.cp-counter{display:inline-flex;align-items:center;margin-top:9px;padding:4px 8px;border:1px solid #f2d87a;border-radius:999px;background:rgba(255,255,255,.78);font-size:13px;color:#6b5a21;}
+.cp-counter:empty{display:none;}
+.cp-tabs{display:none;flex-shrink:0;height:48px;border-bottom:1px solid #fecdd3;background:#fff5f5;}
+.cp-tab{flex:1;display:flex;align-items:center;justify-content:center;height:48px;padding:0;background:transparent;border:none;cursor:pointer;font-family:'Courier New',monospace;font-size:15px;color:var(--text-dark);border-bottom:3px solid transparent;margin-bottom:-1px;transition:background .2s,color .2s,border-color .2s;}
+.cp-tab.active{color:var(--primary);border-bottom-color:var(--primary);background:#ffe4e6;font-weight:bold;}
+.cp-body{flex:1;min-height:0;overflow-y:auto;scrollbar-gutter:stable;padding:14px 18px;}
+.cp-list{display:none;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:72px;column-gap:12px;row-gap:10px;align-content:start;}
+.cp-card{width:100%;height:72px;min-width:0;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:1.45;text-align:center;border:1.5px solid var(--border2);border-radius:8px;background:#fff;cursor:pointer;font-family:'Courier New',monospace;color:var(--text);display:flex;align-items:center;justify-content:center;}
 .cp-card:hover:not(:disabled){border-color:var(--primary);}
-.cp-card.selected{background:var(--primary-dim);border-color:var(--primary);color:var(--primary);}
+.cp-card.selected{background:#fff7d6;border-color:var(--yellow);color:#92400e;box-shadow:0 0 0 1px rgba(245,158,11,.18);}
 .cp-card.cp-disabled,.cp-card:disabled{opacity:.35;cursor:not-allowed;}
 .cp-empty{grid-column:1/-1;font-size:13px;color:var(--text-dark);padding:10px 0;text-align:center;}
-.cp-footer{flex-shrink:0;padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:8px;}
-.cp-footer button{flex:1;padding:11px 0;font-size:14px;font-weight:bold;border-radius:7px;border:none;cursor:pointer;font-family:'Courier New',monospace;}
+.cp-footer{flex-shrink:0;padding:10px 18px;border-top:1px solid #f3df9c;background:#fffdf7;display:flex;gap:12px;}
+.cp-footer button{flex:1;padding:11px 0;font-size:15px;font-weight:bold;border-radius:7px;border:none;cursor:pointer;font-family:'Courier New',monospace;}
 .cp-btn-cancel{background:#fff;border:1.5px solid var(--border2)!important;color:var(--text-dim);}
 .cp-btn-confirm{background:var(--primary);color:#fff;}
 .cp-btn-confirm:disabled{background:#d1d5db;cursor:not-allowed;}
@@ -666,13 +712,14 @@ button{touch-action:manipulation;}
    전체 높이가 뷰포트 높이를 넘어서서 위아래가 그대로 잘려 보였다. max-height(뷰포트 높이
    기준)도 함께 지정해 세로 공간이 부족하면 이미지가 자동으로 더 작아지도록 하고, 전체
    크기도 기존 대비 80% 수준으로 줄였다. 혹시 모를 잔여 초과에 대비해 스크롤도 허용한다. */
-.cover-screen{position:fixed;inset:0;z-index:5000;background:#F8BB00;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;overflow-y:auto;}
-.cover-img{width:auto;height:auto;max-width:min(92vw,736px);max-height:55vh;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.3);}
-.btn-cover-start{padding:13px 42px;font-size:16px;font-weight:bold;letter-spacing:2px;border:none;border-radius:12px;background:var(--primary,#1a2b4c);color:#fff;cursor:pointer;font-family:'Courier New',monospace;box-shadow:0 6px 18px rgba(0,0,0,.25);touch-action:manipulation;flex-shrink:0;}
+.cover-screen{position:fixed;inset:0;z-index:5000;background:#F8BB00;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;overflow-y:auto;}
+.cover-img{display:block;width:auto;height:auto;max-width:min(94vw,1040px);max-height:68vh;max-height:68dvh;border-radius:16px;box-shadow:0 14px 44px rgba(0,0,0,.3);}
+.btn-cover-start{min-width:240px;min-height:68px;padding:18px 64px;font-size:22px;font-weight:bold;letter-spacing:2px;border:none;border-radius:14px;background:var(--primary,#1a2b4c);color:#fff;cursor:pointer;font-family:'Courier New',monospace;box-shadow:0 8px 22px rgba(0,0,0,.25);touch-action:manipulation;flex-shrink:0;}
 .btn-cover-start:active{transform:translateY(1px);}
 @media (max-width:600px){
-  .cover-img{max-width:min(92vw,100%);max-height:48vh;border-radius:10px;}
-  .btn-cover-start{padding:11px 32px;font-size:14px;}
+  .cover-screen{gap:18px;padding:16px;}
+  .cover-img{max-width:min(94vw,100%);max-height:58vh;max-height:58dvh;border-radius:10px;}
+  .btn-cover-start{min-width:200px;min-height:58px;padding:14px 42px;font-size:18px;}
 }
 </style>
 </head>
@@ -751,7 +798,7 @@ button{touch-action:manipulation;}
       </div>
       <!-- 2026-08-16h 추가: 지금 계산 중인 고객카드 이름 표시 -->
       <div class="checkout-target-name" id="checkoutTargetName"></div>
-      <div class="cam-hint" id="camHint">카메라 시작 버튼을 눌러주세요</div>
+      <div class="cam-hint" id="camHint">카메라 시작 버튼을 눌러주세요.</div>
 
       <!-- ── 체크아웃 액션 바 ("고객카드 포기" / "계산 완료") ── -->
       <!-- 2026-08-16g: "다시 계산 시도" 버튼 삭제 — RESET 버튼이 이제 체크아웃 촬영 중에도
@@ -878,7 +925,10 @@ button{touch-action:manipulation;}
 <div class="cp-overlay" id="customerPickerOverlay">
   <div class="cp-box">
     <div class="cp-header">
-      <div class="cp-title" id="customerPickerTitle">어떤 고객을 계산하시겠어요?</div>
+      <div class="cp-title-row">
+        <span class="cp-round-chip" id="customerPickerRoundChip"></span>
+        <div class="cp-title" id="customerPickerTitle">어떤 고객을 계산하시겠어요?</div>
+      </div>
       <div class="cp-hint"></div>
       <div class="cp-counter" id="customerPickerCounter"></div>
     </div>
@@ -1273,7 +1323,7 @@ function openProcessedStatus(){
   const el=document.getElementById('processedStatusBody');
   const codes=Object.keys(state.customerProgress).filter(code=>Object.keys(state.customerProgress[code]||{}).length>0);
   if(codes.length===0){
-    el.innerHTML='<span class="la-empty">아직 처리를 시작한 고객이 없습니다</span>';
+    el.innerHTML='<span class="la-empty">아직 처리를 시작한 고객이 없습니다.</span>';
   } else {
     el.innerHTML=codes.map(code=>{
       const title=laCardTitle(code);
@@ -1406,7 +1456,7 @@ function enterCheckoutCameraReady(){
     state.phase='idle';
   }
   setBadge('idle');
-  document.getElementById('camHint').textContent='● 카드를 대고 셔터를 눌러 계산하세요';
+  document.getElementById('camHint').textContent='● 카드를 대고 셔터를 눌러 계산하세요.';
 }
 
 // 2026-08-16b 추가: "지금 계산할 고객"을 언제든 다른 보유 카드로 전환
@@ -1548,7 +1598,7 @@ function finishCheckoutFlowAdvance(){
     if(rem>0) promptCheckoutTarget();
     // pending>0 && rem===0: 캡처 소진 — 남은 고객은 다음 라운드로 이월(기존 동작 유지)
   } else if(rem===0){
-    document.getElementById('camHint').textContent='● 이번 라운드 고객을 모두 계산했습니다 — 다음 라운드 버튼을 누르세요';
+    document.getElementById('camHint').textContent='● 이번 라운드 고객을 모두 계산했습니다 — 다음 라운드 버튼을 누르세요.';
   } else {
     // pending===0 && rem>0: 처리할 고객은 없지만 캡처는 남음 — 카메라 대기 상태로 복귀
     enterCheckoutCameraReady();
@@ -1596,8 +1646,10 @@ function openCustomerPicker(mode, quota){
     : mode==='purchase' ? '추가로 구매할 고객카드를 하나 골라주세요.'
     : '지금 계산할 고객 한 명을 골라주세요.';
   // 2026-08-17 추가(세린님 지시): 매 라운드 고객카드 뽑기 화면에 현재 라운드 번호를 표시
-  document.getElementById('customerPickerTitle').textContent =
-    mode==='roundDraw' ? `${state.round}라운드 · 어떤 고객을 계산하시겠어요?` : '어떤 고객을 계산하시겠어요?';
+  const roundChip=document.getElementById('customerPickerRoundChip');
+  roundChip.textContent=`${state.round}라운드`;
+  roundChip.style.display=mode==='roundDraw' ? 'inline-flex' : 'none';
+  document.getElementById('customerPickerTitle').textContent='어떤 고객을 계산하시겠어요?';
   tabsEl.style.display = (mode==='targetSelect') ? 'none' : 'flex';
   confirmBtn.style.display = (mode==='roundDraw') ? 'inline-block' : 'none';
   // 라운드 뽑기는 필수 선택(취소 불가). 체크아웃 대상 선택(targetSelect)은 2026-08-16g
@@ -1850,7 +1902,7 @@ function laCardChip(code, zone){
         doneLabel=`${BIG_FAMILY_PAYABLE_ROUND}R부터`;
         disabledAttr=' disabled title="5라운드부터 결제 가능"';
       } else if(!isFront){
-        disabledAttr=' disabled title="줄 순서대로 처리해주세요"';
+        disabledAttr=' disabled title="줄 순서대로 처리해주세요."';
       }
       doneBtn=`<button type="button" class="la-chip-done" onpointerdown="event.stopPropagation()" onclick="finishStaffLineCard('${code}')"${disabledAttr}>${doneLabel}</button>`;
     }
@@ -1947,7 +1999,7 @@ function renderLineAssign(){
     // (staging이 비어 있어도 AI/직원 줄 카드를 여기로 끌어오면 배치를 취소할 수 있으므로).
     stagingEl.innerHTML = laStagingCodes.length
       ? laStagingCodes.map(c=>laCardChip(c,'staging')).join('')
-      : '<span class="la-empty">여기로 끌어오면 배치를 취소할 수 있어요</span>';
+      : '<span class="la-empty">여기로 끌어오면 배치를 취소할 수 있어요.</span>';
   } else {
     stagingEl.style.display='none';
     stagingEl.innerHTML='';
@@ -2052,7 +2104,7 @@ function cancelCheckoutTargetForMove(){
     document.getElementById('topStatus').textContent='CAMERA ON';
   }
   setBadge('idle');
-  document.getElementById('camHint').textContent='● 카드를 대고 셔터를 눌러 계산하세요';
+  document.getElementById('camHint').textContent='● 카드를 대고 셔터를 눌러 계산하세요.';
   updateShutterState();
 }
 function moveLaCard(code, fromZone, toZone){
@@ -3101,7 +3153,7 @@ async function startCamera(){
     const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
     let tip=isIOS
       ? '아이패드/Safari는 HTTPS가 아닌 주소에서 카메라를 허용할 방법이 없습니다. Netlify 배포(무료 HTTPS) 또는 Cloudflare Tunnel/ngrok 같은 임시 HTTPS 주소를 사용해주세요.'
-      : 'Chrome 태블릿이라면 주소창에 chrome://flags 를 입력해 "Insecure origins treated as secure"에 이 주소를 등록하고 재시작하면 우회할 수 있습니다. (근본 해결은 HTTPS 배포입니다)';
+      : 'Chrome 태블릿이라면 주소창에 chrome://flags 를 입력해 "Insecure origins treated as secure"에 이 주소를 등록하고 재시작하면 우회할 수 있습니다. (근본 해결은 HTTPS 배포입니다.)';
     camErrEl.innerHTML='⚠ 이 주소(HTTP)에서는 카메라 권한을 요청할 수 없습니다.<br/>'+tip;
     camErrEl.classList.add('show');
     return;
@@ -3174,13 +3226,13 @@ async function startCamera(){
     // 끝나 있을 가능성을 높이기 위함 — 그래도 안 끝나 있으면 computeOcrGuess가 조용히
     // null을 반환하고 기존 로직만으로 판정하므로 안전하다.
     ocrpEnsureEngineLoaded();
-    document.getElementById('camHint').textContent='● 카드 하단을 프레임 끝까지 내린 후 촬영하세요';
+    document.getElementById('camHint').textContent='● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.';
   }catch(e){
     let msg='카메라 접근 실패.';
     if(e.name==='NotAllowedError'){
       const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
       msg='⚠ 카메라 권한이 거부되었습니다.<br/>'+(isIOS
-        ? '설정 앱 → Safari → 카메라 → "허용"으로 바꾼 뒤, 이 페이지를 새로고침 해주세요. (또는 주소창의 "aA" 버튼 → 웹사이트 설정 → 카메라 → 허용)'
+        ? '설정 앱 → Safari → 카메라 → "허용"으로 바꾼 뒤, 이 페이지를 새로고침 해주세요. (또는 주소창의 "aA" 버튼 → 웹사이트 설정 → 카메라 → 허용.)'
         : '주소창의 자물쇠(또는 정보) 아이콘 → 권한 → 카메라 → 허용으로 바꾼 뒤, 새로고침 해주세요.');
     }
     if(e.name==='NotFoundError')msg='카메라를 찾을 수 없습니다. 태블릿에 카메라가 있는지, 다른 앱이 카메라를 사용 중인지 확인해주세요.';
@@ -3348,7 +3400,7 @@ function startLiveDebug(){
     if(liveLevel===2) liveLockedOk=true; // 인식완료에 한 번 도달하면 이번 촬영 시도 동안 고정
     state.liveLevel=liveLevel; // 2026-08-16m 추가: 셔터 게이트(updateShutterState)가 참조할 수 있도록 동기화
     const showOk=liveLevel===2, showPart=liveLevel===1;
-    lpt.textContent = showOk ? '● 인식완료' : (showPart ? '◐ 카드 인식 중' : '○ 카드를 대주세요');
+    lpt.textContent = showOk ? '● 인식완료' : (showPart ? '◐ 카드 인식 중' : '○ 카드를 대주세요.');
     lp.classList.toggle('recog-ok', showOk);
     lp.classList.toggle('recog-part', showPart);
     lp.classList.toggle('recog-wait', !showOk && !showPart);
@@ -3373,11 +3425,11 @@ function startLiveDebug(){
         // 마커가 프레임 가장자리에 거의 붙어 잘려나갔을 가능성 — 카드가 너무 가까움
         const edgeClipped=structural.leftEdge<=fw*0.02||structural.rightEdge>=fw*0.98;
         if(edgeClipped||widthRatio>0.97){
-          framingHint='● 카메라를 조금 뒤로 해주세요';
+          framingHint='● 카메라를 조금 뒤로 해주세요.';
         } else if(structural.scanYs<0.75){
           // 구조가 잡힌 밴드가 아직 하단(97~100%가 이상적 위치)에서 멀리 떨어져 있음
           // → 카드를 더 내려야 바코드 영역이 정위치에 들어옴
-          framingHint='● 카드를 더 아래로 내려주세요';
+          framingHint='● 카드를 더 아래로 내려주세요.';
         }
       }
       if(!framingHint){
@@ -3389,7 +3441,7 @@ function startLiveDebug(){
         const rawEdges=detectRawEdges(rawSmoothed);
         if(rawEdges){
           const rawRatio=(rawEdges.rightEdge-rawEdges.leftEdge)/ic.width;
-          if(rawRatio<0.55) framingHint='● 카드를 더 가까이 대주세요';
+          if(rawRatio<0.55) framingHint='● 카드를 더 가까이 대주세요.';
         }
       }
     }
@@ -3403,7 +3455,7 @@ function startLiveDebug(){
     } else if(showOk && shootable){
       camHintEl.textContent = state.practiceMode
         ? '● 인식 완료! 지금 카드 위치를 기억해두세요'
-        : '● 인식 완료 — 셔터를 눌러 촬영하세요';
+        : '● 인식 완료 — 셔터를 눌러 촬영하세요.';
     } else if(state.practiceMode){
       // 연습 모드는 updateShutterState()가 셔터만 잠그고 힌트 문구는 안 건드리므로
       // (아래 updateShutterState 수정 참고) 여기서 기본 안내를 채워준다.
@@ -3472,7 +3524,7 @@ function updateShutterState(){
     btn.disabled=true;
     btn.classList.remove('blurry');
     if(state.phase==='camera'){
-      hint.textContent='● 이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다';
+      hint.textContent='● 이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다.';
     }
     return;
   }
@@ -3492,13 +3544,13 @@ function updateShutterState(){
   btn.classList.remove('blurry');
   if(isCamera){
     if(!hasTarget){
-      hint.textContent='● 먼저 계산할 고객을 선택하세요';
+      hint.textContent='● 먼저 계산할 고객을 선택하세요.';
     } else if(rem===0){
       hint.textContent='● 이번 라운드 AI 캡처 소진 — 다음 라운드 버튼 누르세요';
     } else if(!hasCard){
-      hint.textContent='● 카드를 카메라에 비춰주세요';
+      hint.textContent='● 카드를 카메라에 비춰주세요.';
     } else {
-      hint.textContent='● 카드 전체가 가이드 박스에 들어오도록 맞춰주세요';
+      hint.textContent='● 카드 전체가 가이드 박스에 들어오도록 맞춰주세요.';
     }
   }
 }
@@ -3554,8 +3606,8 @@ function nextRound(){
     document.getElementById('btnReset').disabled=true;
   }
   document.getElementById('laHint').textContent = state.round>=5
-    ? '🏁 마지막 라운드 — 고객 현황을 정리한 뒤 완료를 눌러주세요'
-    : '📋 고객 현황을 업데이트 해주세요';
+    ? '🏁 마지막 라운드 — 고객 현황을 정리한 뒤 완료를 눌러주세요.'
+    : '📋 고객 현황을 업데이트 해주세요.';
 }
 // 2026-08-18 추가(세린님 지시): "다음 라운드" 버튼 — "정산"과 달리 고객 현황 화면/정산
 // 팝업 없이 곧바로 다음 라운드로 넘어가고, 다음 라운드의 고객 선택 화면이 뜬다. 5라운드는
@@ -3608,7 +3660,7 @@ function advanceToNextRound(){
       state.cameraStream=null;state.phase='idle';
       document.getElementById('btnCamera').disabled=false;
       document.getElementById('topStatus').textContent='STANDBY';
-      document.getElementById('camHint').textContent='카메라가 끊어졌습니다. 카메라 시작을 눌러주세요';
+      document.getElementById('camHint').textContent='카메라가 끊어졌습니다. 카메라 시작을 눌러주세요.';
       showToast('카메라 재시작이 필요합니다','error');
     } else {
       const v=document.getElementById('cameraVideo');
@@ -3624,8 +3676,8 @@ function advanceToNextRound(){
   document.getElementById('vfFill').style.width='0%';
   setBadge('idle');renderObjList();renderScore();updateCaptureUI();
   document.getElementById('camHint').textContent=state.cameraStream
-    ?'● 카드 하단을 프레임 끝까지 내린 후 촬영하세요'
-    :'카메라 시작 버튼을 눌러주세요';
+    ?'● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.'
+    :'카메라 시작 버튼을 눌러주세요.';
   // 2026-08-17 변경: "N라운드 시작!"과 "AI 캡처 N회 가능" 안내를 하나로 합쳤고,
   // 이 토스트가 완전히 사라질 때까지(3200ms 표시 + 300ms 페이드 = 3500ms) 기다린 뒤에야
   // 고객카드 뽑기 화면을 연다 — 팝업과 고객 선택 화면이 겹치지 않도록.
@@ -4393,8 +4445,8 @@ function handleReset(){
   document.getElementById('captureDebugPanel').classList.remove('show');
   document.getElementById('liveProduct').classList.remove('show');
   document.getElementById('camHint').textContent=state.cameraStream
-    ?`● 카드 하단을 프레임 끝까지 내린 후 촬영하세요 (잔여 ${getRemainingCaptures()}회)`
-    :'카메라 시작 버튼을 눌러주세요';
+    ?`● 카드 하단을 프레임 끝까지 내린 후 촬영하세요. (잔여 ${getRemainingCaptures()}회)`
+    :'카메라 시작 버튼을 눌러주세요.';
   document.getElementById('topStatus').textContent=state.cameraStream?'CAMERA ON':'STANDBY';
   document.getElementById('vfFill').style.width='0%';
   setBadge('idle');renderObjList();renderScore();
@@ -4523,8 +4575,15 @@ function addBoostHistory(type,code){
   const labels={'L':'추가 학습','S':'처리속도 향상','A':'AI 맞춤형 광고'};
   boostHistory.push({type,code,label:labels[type]||type});
 }
+function punctuateUiMessage(msg){
+  return String(msg).split('\n').map(line=>{
+    const trimmed=line.trimEnd();
+    if(!trimmed || /[.!?…。！？]$/.test(trimmed)) return line;
+    return /[가-힣0-9)\]]$/.test(trimmed) ? `${trimmed}.` : trimmed;
+  }).join('\n');
+}
 function showFb(el,msg,t){
-  el.textContent=msg;el.className='code-feedback '+(t==='ok'?'fb-ok':'fb-err');
+  el.textContent=punctuateUiMessage(msg);el.className='code-feedback '+(t==='ok'?'fb-ok':'fb-err');
   clearTimeout(el._t);el._t=setTimeout(()=>{el.textContent='';el.className='code-feedback';},2500);
 }
 function getStage(key){return Math.min(state.codeCount[key]||0,2);}
@@ -4616,7 +4675,7 @@ function setBadge(mode){
 function showToast(msg,type='unlock1'){
   const container=document.getElementById('toastContainer');
   const t=document.createElement('div');
-  t.className=`toast ${type}`;t.textContent=msg;
+  t.className=`toast ${type}`;t.textContent=punctuateUiMessage(msg);
   container.appendChild(t);
   setTimeout(()=>{
     t.style.transition='opacity .3s,transform .3s';
