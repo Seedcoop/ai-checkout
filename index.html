@@ -52,7 +52,7 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 .slbl{font-size:16px;color:var(--text-dim);letter-spacing:1px;}
 
 /* 메인 좌우 */
-.main{display:flex;flex:1;overflow:hidden;}
+.main{display:flex;flex:1;min-height:0;overflow:hidden;}
 
 /* ── 왼쪽: 카메라 ── */
 .cam-panel{
@@ -274,13 +274,13 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 .stripe-pill.active{border-color:var(--primary);background:var(--primary-dim);}
 
 /* ── 오른쪽 패널 ── */
-.right-panel{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg);}
+.right-panel{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;background:var(--bg);}
 
 .tabs{display:flex;border-bottom:2px solid var(--border);flex-shrink:0;}
 .tab-btn{flex:1;padding:10px 0;background:transparent;border:none;cursor:pointer;font-family:'Courier New',monospace;font-size:16px;letter-spacing:1.5px;color:var(--text-dark);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
 .tab-btn.active{color:var(--primary);border-bottom-color:var(--yellow);font-weight:bold;}
 .tab-btn:hover:not(.active){color:var(--text-dim);}
-.tab-pane{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.tab-pane{display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden;}
 .tab-pane.active{display:flex;}
 
 /* ── 캡처 횟수 바 ── */
@@ -317,7 +317,7 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
 
 .obj-list{
-  flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 8px;
+  flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:6px 8px;
   display:grid;grid-template-columns:repeat(5,1fr);
   /* 2026-08-20 수정(반응형 잘림 대응): 세로 공간이 부족한 화면에서 fr 고정 대신
      내용 크기(auto)로 행 높이를 잡아 카드 내용이 억지로 눌리지 않도록 함 */
@@ -331,7 +331,7 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
   background:#fff;border:2px solid var(--border);border-radius:10px;
   padding:10px 8px 8px;
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;
-  gap:7px;position:relative;
+  gap:7px;position:relative;min-width:0;min-height:max-content;
   transition:border-color .3s,background .3s,box-shadow .3s;
   /* 2026-08-20 수정(반응형 잘림 근본 원인 해결): min-height:0이 그리드 아이템의
      콘텐츠 기반 최소 높이 보호를 제거하고 있었음 — 특정 화면 폭(가로 601~899px 등
@@ -365,7 +365,7 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 @keyframes ledRed{0%{box-shadow:0 0 0 0 rgba(239,68,68,0);background:#ef4444;}50%{box-shadow:0 0 10px 4px rgba(239,68,68,0.8);}100%{box-shadow:0 0 6px 2px rgba(239,68,68,0.65);}}
 
 /* 단계 뱃지 */
-.stage-badge{font-size:15px;line-height:1.35;letter-spacing:.3px;padding:4px 6px;border-radius:5px;font-weight:bold;width:100%;text-align:center;white-space:nowrap;box-sizing:border-box;flex-shrink:0;}
+.stage-badge{font-size:15px;line-height:1.35;letter-spacing:.3px;padding:4px 6px;border-radius:5px;font-weight:bold;width:100%;text-align:center;white-space:normal;word-break:keep-all;box-sizing:border-box;flex-shrink:0;}
 .stage-0{background:var(--bg3);color:var(--text-dark);}
 .stage-1{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
 .stage-2{background:#f0fdf4;color:#15803d;border:1px solid #86efac;}
@@ -575,12 +575,12 @@ body *{font-family:'PaperlogyKR','Courier New',monospace!important;}
 /* 태블릿 메인 상품 카드: 현재 여백 비율은 유지하고 줄바꿈·넘침만 방지 */
 @media (min-width:900px) and (orientation:landscape){
   .capture-label,.capture-nums,.status-pill,.round-badge,.btn-settle-round,.btn-next-round{white-space:nowrap;}
-  .obj-card{overflow:hidden;}
+  .obj-card{overflow:visible;}
 }
 
 @media (min-width:601px) and (max-width:1024px) and (orientation:portrait){
   .capture-label,.capture-nums,.status-pill,.round-badge,.btn-settle-round,.btn-next-round{white-space:nowrap;}
-  .obj-card{overflow:hidden;}
+  .obj-card{overflow:visible;}
   .stage-badge{font-size:15px;padding-left:4px;padding-right:4px;}
 }
 
@@ -659,7 +659,7 @@ button{touch-action:manipulation;}
 .la-chip-done:disabled{background:#cbd5e1;color:#64748b;cursor:not-allowed;}
 /* 2026-08-16i 추가: "대가족 카드" 강조 스타일 */
 .la-chip-bigfamily{background:#fef3c7;border-color:#f59e0b;}
-/* 2026-08-17 추가(세린님 지시): 직원 줄 ↔ AI계산대 줄 이동 횟수 표시 — 3회 초과(4회째부터)면 경고색 */
+/* 직원 줄 ↔ AI계산대 줄 이동 횟수 표시 — 3회째부터 경고색 */
 .la-move-count{font-size:12px;color:var(--text-dim);font-weight:normal;}
 .la-move-count-warn{color:#dc2626;font-weight:bold;}
 /* 2026-08-17 추가: "고객 줄 현황"/"새 고객 배치하기" 화면의 이동 페널티 안내 문구 */
@@ -728,6 +728,44 @@ button{touch-action:manipulation;}
   .cover-img{max-width:min(94vw,100%);max-height:58vh;max-height:58dvh;border-radius:10px;}
   .btn-cover-start{min-width:200px;min-height:58px;padding:14px 42px;font-size:18px;}
 }
+/* 고객 큐가 여러 줄이어도 학습률을 카드 안에 보존한다.
+   창 높이 대신 실제 VISION 영역의 높이로 카드 크기를 조절한다. */
+.obj-list{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(2,minmax(min-content,1fr));}
+.capture-bar{flex-wrap:wrap;}
+.mcq-chip{max-width:100%;white-space:normal;overflow-wrap:anywhere;}
+@media (min-width:601px) and (orientation:landscape){
+  .right-panel{overflow-y:auto;}
+  #pane-vision{container:vision / size;flex:1 0 380px;min-height:380px;}
+  .obj-list{overscroll-behavior-y:contain;}
+}
+@container vision (max-height:560px){
+  .obj-list{gap:4px;padding:5px 6px;}
+  .obj-card{padding:5px 4px;gap:4px;}
+  .obj-icon{width:38px;height:38px;font-size:28px;border-radius:8px;}
+  .obj-led{width:10px;height:10px;}
+  .obj-name{font-size:16px;}
+  .obj-price-sm{font-size:15px;}
+  .stage-badge{font-size:14px;padding:3px 2px;letter-spacing:0;}
+  .capture-bar{padding:5px 10px;gap:5px;}
+  .capture-info{gap:6px;}
+  .capture-right{gap:5px;}
+  .score-bar{padding:4px 12px 5px;}
+  .score-lbl{font-size:12px;letter-spacing:2px;margin-bottom:2px;}
+  .score-display{padding:3px 10px;}
+  .score-val{font-size:30px;}
+  .score-sub{font-size:12px;margin-top:2px;}
+}
+.round-recovery-note{font-size:12px;line-height:1.5;color:var(--text-dim,#64748b);margin:4px 0 8px;}
+.round-recovery-btn:disabled{opacity:.45;cursor:not-allowed;}
+#confirmPreviousRoundButton:disabled{opacity:.45;cursor:not-allowed;}
+.btn-next-round.needs-settlement{background:#e5e7eb;color:#596275;}
+.capture-right{flex-wrap:wrap;}
+#previousRoundConfirmOverlay{z-index:12000;}
+#saveFailureOverlay{z-index:20000;}
+#previousRoundConfirmOverlay .tp-box,#saveFailureOverlay .tp-box{max-height:90vh;max-height:90dvh;overflow-y:auto;}
+.la-footer{flex-wrap:wrap;}
+.recovery-check{display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:15px;line-height:1.6;margin:16px 0;}
+.recovery-check input{width:22px;height:22px;flex-shrink:0;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -881,11 +919,13 @@ button{touch-action:manipulation;}
           <div class="capture-right">
             <span class="trust-badge" id="trustPenaltyBadge"></span>
             <span class="round-badge" id="roundBadge">R1</span>
+            <button class="btn-settle-round round-recovery-btn" id="btnPreviousRound" onclick="onClickPreviousRound()" disabled>◀ 이전 라운드</button>
             <button class="btn-settle-round" id="btnSettleRound" onclick="nextRound()">정산</button>
             <button class="btn-next-round" id="btnNextRound" onclick="onClickAdvanceRound()">다음 라운드 ▶</button>
           </div>
         </div>
 
+        <p class="round-recovery-note" id="previousRoundHint" role="status"></p>
         <div class="obj-list" id="objList"></div>
         <div class="score-bar">
           <div class="score-lbl">— 인식 완료 총액 —</div>
@@ -937,6 +977,7 @@ button{touch-action:manipulation;}
         <div class="cp-title" id="customerPickerTitle">어떤 고객을 계산하시겠어요?</div>
       </div>
       <div class="cp-hint"></div>
+      <div class="round-recovery-note" id="customerPickerRecoveryHint" style="display:none;"></div>
       <div class="cp-counter" id="customerPickerCounter"></div>
     </div>
     <div class="cp-tabs" id="customerPickerTabs">
@@ -949,6 +990,7 @@ button{touch-action:manipulation;}
     </div>
     <div class="cp-footer">
       <button class="cp-btn-cancel" id="customerPickerCancel" style="display:none;" onclick="closeCustomerPicker()">닫기</button>
+      <button class="cp-btn-cancel round-recovery-btn" id="customerPickerPreviousRound" onclick="onClickPreviousRound()" disabled>◀ 이전 라운드</button>
       <button class="cp-btn-confirm" id="customerPickerConfirm" style="display:none;" onclick="confirmCustomerPicker()" disabled>선택 완료</button>
     </div>
   </div>
@@ -983,6 +1025,57 @@ button{touch-action:manipulation;}
     <div class="tp-btn-row">
       <button class="tp-btn tp-btn-secondary" onclick="closeFullResetConfirm()">취소</button>
       <button class="tp-btn" onclick="confirmFullResetClick()">초기화</button>
+    </div>
+  </div>
+</div>
+
+<!-- 새로고침/재접속 후 같은 팀의 진행을 이어갈지 선택 -->
+<div class="tp-overlay" id="resumeGameOverlay">
+  <div class="tp-box">
+    <div class="tp-title tp-title-success">💾 저장된 게임</div>
+    <div class="tp-msg" id="resumeGameMsg"></div>
+    <div class="tp-btn-row">
+      <button class="tp-btn tp-btn-secondary" onclick="startNewGameFromResume()">새 게임 시작</button>
+      <button class="tp-btn tp-btn-success" onclick="resumeSavedGame()">이어하기</button>
+    </div>
+  </div>
+</div>
+
+<div class="tp-overlay" id="saveFailureOverlay" role="alertdialog" aria-modal="true" aria-labelledby="saveFailureTitle">
+  <div class="tp-box">
+    <div class="tp-title" id="saveFailureTitle">⚠ 진행을 저장하지 못했습니다</div>
+    <div class="tp-msg">현재 진행은 이 화면에 남아 있습니다. 새로고침하거나 창을 닫으면 최근 진행이 사라질 수 있습니다.<br><br>브라우저의 사이트 저장 허용 여부와 저장 공간을 확인한 뒤 다시 저장해주세요. 이 사이트의 데이터를 삭제하지 마세요.</div>
+    <button class="tp-btn" id="retryGameSaveButton" onclick="retryGameSave()">다시 저장</button>
+  </div>
+</div>
+
+<div class="tp-overlay" id="previousRoundConfirmOverlay" role="dialog" aria-modal="true" aria-labelledby="previousRoundTitle">
+  <div class="tp-box">
+    <div class="tp-title" id="previousRoundTitle">◀ 이전 라운드 복구</div>
+    <div class="tp-msg" id="previousRoundConfirmMsg"></div>
+    <label class="recovery-check"><input type="checkbox" id="previousRoundPhysicalCheck" onchange="updatePreviousRoundConfirmation()"><span>선생님과 함께 이전 라운드로 돌아가도 되는지 확인했습니다.</span></label>
+    <div class="tp-btn-row">
+      <button class="tp-btn tp-btn-secondary" onclick="cancelPreviousRound()">취소</button>
+      <button class="tp-btn" id="confirmPreviousRoundButton" onclick="confirmPreviousRound()" disabled>확인한 상태로 복구</button>
+    </div>
+  </div>
+</div>
+
+<!-- 빠른 중복 터치로 라운드가 건너뛰는 것을 막는 2단계 확인 -->
+<div class="tp-overlay" id="settlementRequiredOverlay" role="alertdialog" aria-modal="true" aria-labelledby="settlementRequiredTitle">
+  <div class="tp-box">
+    <div class="tp-title" id="settlementRequiredTitle">정산을 먼저 진행해주세요</div>
+    <div class="tp-msg">‘정산’ 버튼을 눌러 고객 현황을 확인한 후 다음 라운드로 이동해주세요.</div>
+    <button class="tp-btn" onclick="closeSettlementRequiredPopup()">확인</button>
+  </div>
+</div>
+<div class="tp-overlay" id="roundAdvanceConfirmOverlay">
+  <div class="tp-box">
+    <div class="tp-title">⚠ 다음 라운드 확인</div>
+    <div class="tp-msg" id="roundAdvanceConfirmMsg"></div>
+    <div class="tp-btn-row">
+      <button class="tp-btn tp-btn-secondary" onclick="cancelRoundAdvance()">취소</button>
+      <button class="tp-btn" onclick="confirmRoundAdvance()">다음 라운드</button>
     </div>
   </div>
 </div>
@@ -1042,7 +1135,7 @@ button{touch-action:manipulation;}
       <div class="la-title" id="laTitle">고객 줄 현황</div>
       <div class="la-hint" id="laHint"></div>
       <!-- 2026-08-17 추가(세린님 지시): 이동 횟수/페널티 규칙 안내 -->
-      <div class="la-hint la-hint-rule">↔ 같은 고객카드를 이번 라운드 안에 3회째부터 옮기면 신뢰도-1(₩1,000 차감)이 매번 적용돼요 — 고객명 옆 숫자로 이동 횟수를 확인하세요.</div>
+      <div class="la-hint la-hint-rule">↔ 같은 고객카드를 한 라운드 안에 3회째부터 옮기면 신뢰도-1(₩1,000 차감)이 매번 적용돼요 — 고객명 옆 숫자로 이동 횟수를 확인하세요.</div>
     </div>
     <!-- 2026-08-18 변경(세린님 지시): 잘못 드래그했을 때 되돌릴 수 있도록 staging(배치 대기)
          칸도 드롭존으로 만든다 — draw 모드에서 AI/직원 줄에 놓은 카드를 다시 여기로 끌어오면
@@ -1062,6 +1155,7 @@ button{touch-action:manipulation;}
     <div class="la-finished" id="laFinished"></div>
     <div class="la-footer">
       <button class="cp-btn-cancel la-btn-back" id="laBackBtn" style="display:none;" onclick="laGoBack()">← 뒤로</button>
+      <button class="cp-btn-cancel round-recovery-btn" id="lineAssignPreviousRound" onclick="onClickPreviousRound()" disabled>◀ 이전 라운드</button>
       <button class="cp-btn-cancel la-btn-cancel-round" id="laCancelRoundBtn" style="display:none;" onclick="cancelRoundStartLineAssign()">취소</button>
       <button class="cp-btn-confirm" id="laConfirmBtn" onclick="confirmLineAssign()">닫기</button>
     </div>
@@ -1117,7 +1211,7 @@ const state={
   staffFinishedThisRound:[], // {code}
   // 2026-08-17 추가(세린님 지시): 직원 줄 ↔ AI계산대 줄 사이로 드래그해서 옮긴 횟수
   // ({code: 횟수}) — 라운드가 바뀌면 0으로 리셋(advanceToNextRound 참고). 한 라운드 안에
-  // 같은 고객을 3회를 초과해서(4회째부터) 옮기면 매번 신뢰도-1(₩1,000 차감)이 적용된다.
+  // 같은 고객을 3회째부터 옮길 때마다 신뢰도-1(₩1,000 차감)이 적용된다.
   customerMoveCount:{},
   // 2026-08-16k 추가: "처리 고객 현황" — 고객카드 코드별로 지금까지 인식(성공) 처리된 상품
   // key만 true로 누적 기록한다({code: {productKey: true, ...}}). 라운드가 바뀌어도 유지되며
@@ -1133,75 +1227,277 @@ const state={
   finishCalcPromptShownThisRound:false,
   // 2026-08-18 추가(세린님 지시): 위 팝업에서 "확인"을 누르면 코드는 정상 적용되지만, 그
   // 대가로 이번 라운드는 셔터(촬영)가 잠긴다 — 다음 라운드 시작 시 자동 해제(advanceToNextRound 참고).
-  shutterLockedThisRound:false
+  shutterLockedThisRound:false,
+  shutterLockReason:null, // 'settlement' | 'late-code' | null
+  settlementVisitedThisRound:false,
+  returnedToPreviousRound:false,
+  // 새 고객 뽑기/배치까지 완료됐는지 기록해 재접속 시 중복 배정을 막는다.
+  roundSetupComplete:false,
+  bigFamilyIntroAcknowledged:false,
+  // 촬영 중 새로고침이 되어도 기술 오류와 이미 확정된 결과를 구분한다.
+  pendingCapture:null,
+  sessionActive:false,
+  sessionId:null,
+  sessionCreatedAt:0
 };
 const INITIAL_CHIP_COUNT=0; // 게임용: 0단계 시작 (데이터 학습 필요)
 
-// ── 진행 저장 (탭/창을 실수로 닫아도 유지, 새로고침이나 '전체 초기화'로만 삭제) ──
-const SAVE_KEY='aiScannerSaveV1';
-function isPageRefresh(){
-  try{
-    const nav=performance.getEntriesByType('navigation')[0];
-    if(nav) return nav.type==='reload';
-    if(performance.navigation) return performance.navigation.type===1;
-  }catch(e){}
-  return false;
+// ── 진행 저장 V2: 게임 규칙 상태와 현재 흐름을 함께 저장 ──
+const SAVE_SCHEMA_VERSION=2;
+const SAVE_KEY='aiScannerSaveV2';
+const SAVE_BACKUP_KEY='aiScannerSaveV2Backup';
+const LEGACY_SAVE_KEY='aiScannerSaveV1';
+let saveRevision=0;
+let pendingResumeData=null;
+let restoredFlowState=null;
+let resumeRecoveryNotice='';
+let isRestoringState=false;
+let saveFailureActive=false;
+let previousRoundRecovery=null;
+let previousRoundConfirmOpen=false;
+
+function createSessionId(){
+  try{ if(crypto&&typeof crypto.randomUUID==='function') return crypto.randomUUID(); }catch(e){}
+  return `session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
-function saveGameState(){
-  try{
-    localStorage.setItem(SAVE_KEY,JSON.stringify({
-      codeCount:state.codeCount,
+function numberOr(value,fallback=0){return Number.isFinite(Number(value))?Number(value):fallback;}
+function clonePlain(value,fallback){
+  try{return JSON.parse(JSON.stringify(value));}catch(e){return fallback;}
+}
+function getFlowSnapshot(){
+  const isShown=(id)=>{
+    const el=document.getElementById(id);
+    return !!el && el.style.display==='flex';
+  };
+  return {
+    customerPicker:{
+      mode:cpMode||null,
+      quota:clonePlain(cpQuota,null),
+      selectedSingle:[...cpSelected.single],
+      selectedMulti:[...cpSelected.multi],
+      activeTab:cpActiveTab||'single'
+    },
+    lineAssign:{
+      mode:laMode||null,
+      stagingCodes:[...laStagingCodes],
+      roundStartPending:!!laRoundStartPending,
+      drawOrigin:clonePlain(laDrawOrigin,null),
+      drawBatchCodes:[...laDrawBatchCodes]
+    },
+    overlays:{
+      roundSettle:isShown('roundSettleOverlay'),
+      finalSettle:isShown('finalSettleOverlay'),
+      bigFamily:isShown('bigFamilyAppearOverlay')
+    }
+  };
+}
+function buildGameSnapshot(includeRecovery=true){
+  return {
+    schemaVersion:SAVE_SCHEMA_VERSION,
+    revision:++saveRevision,
+    savedAt:Date.now(),
+    session:{
+      id:state.sessionId,
+      createdAt:state.sessionCreatedAt,
+      active:!!state.sessionActive
+    },
+    game:{
+      codeCount:{...state.codeCount},
       usedCodes:[...state.usedCodes],
-      boostHistory:boostHistory,
-      captureBonus:state.captureBonus,
-      captureUsed:state.captureUsed,
-      round:state.round,
+      boostHistory:clonePlain(boostHistory,[]),
+      captureBonus:state.captureBonus||0,
+      captureUsed:state.captureUsed||0,
+      round:state.round||1,
       adActive:state.adActive||0,
       roundTotal:state.roundTotal||0,
       roundCount:state.roundCount||0,
+      cumulativeGrossTotal:state.cumulativeGrossTotal||0,
+      myCustomerCards:clonePlain(state.myCustomerCards,[]),
+      checkoutTarget:state.checkoutTarget||null,
+      checkoutLastOutcome:state.checkoutLastOutcome||null,
+      trustPenaltyCount:state.trustPenaltyCount||0,
+      staffLineCards:clonePlain(state.staffLineCards,[]),
+      staffFinishedThisRound:clonePlain(state.staffFinishedThisRound,[]),
+      customerMoveCount:{...state.customerMoveCount},
+      customerProgress:clonePlain(state.customerProgress,{}),
+      results:{...state.results},
+      voidedKeys:[...state.voidedKeys],
+      phase:state.phase,
       finishCalcPromptShownThisRound:!!state.finishCalcPromptShownThisRound,
-      shutterLockedThisRound:!!state.shutterLockedThisRound
-    }));
-  }catch(e){console.log('[SAVE] failed:',e.message);}
+      shutterLockedThisRound:!!state.shutterLockedThisRound,
+      shutterLockReason:state.shutterLockReason||null,
+      settlementVisitedThisRound:!!state.settlementVisitedThisRound,
+      returnedToPreviousRound:!!state.returnedToPreviousRound,
+      roundSetupComplete:!!state.roundSetupComplete,
+      bigFamilyIntroAcknowledged:!!state.bigFamilyIntroAcknowledged,
+      pendingCapture:clonePlain(state.pendingCapture,null)
+    },
+    flow:getFlowSnapshot(),
+    previousRoundRecovery:includeRecovery?clonePlain(previousRoundRecovery,null):null
+  };
 }
-function loadGameState(){
+function saveGameState(){
+  if(!state.sessionActive || isRestoringState)return false;
   try{
-    const raw=localStorage.getItem(SAVE_KEY);
-    if(!raw)return;
-    const data=JSON.parse(raw);
-    if(data.codeCount){
-      Object.keys(data.codeCount).forEach(k=>{
-        if(state.codeCount.hasOwnProperty(k))state.codeCount[k]=data.codeCount[k];
-      });
+    const snapshot=buildGameSnapshot();
+    const json=JSON.stringify(snapshot);
+    const previous=localStorage.getItem(SAVE_KEY);
+    localStorage.setItem(SAVE_KEY,json);
+    if(localStorage.getItem(SAVE_KEY)!==json)throw new Error('save-verification-failed');
+    // 보조 저장 실패가 최신 진행의 저장까지 막지 않도록 최신본을 먼저 확정한다.
+    if(parseSavedSnapshot(previous)){
+      try{localStorage.setItem(SAVE_BACKUP_KEY,previous);}catch(e){console.log('[SAVE] backup unavailable:',e.message);}
     }
-    if(Array.isArray(data.usedCodes))data.usedCodes.forEach(c=>state.usedCodes.add(c));
-    if(Array.isArray(data.boostHistory))boostHistory.push(...data.boostHistory);
-    if(typeof data.captureBonus==='number')state.captureBonus=data.captureBonus;
-    if(typeof data.captureUsed==='number')state.captureUsed=data.captureUsed;
-    if(typeof data.round==='number')state.round=data.round;
-    if(typeof data.adActive==='number')state.adActive=data.adActive;
-    if(typeof data.roundTotal==='number')state.roundTotal=data.roundTotal;
-    if(typeof data.roundCount==='number')state.roundCount=data.roundCount;
-    if(typeof data.finishCalcPromptShownThisRound==='boolean')state.finishCalcPromptShownThisRound=data.finishCalcPromptShownThisRound;
-    if(typeof data.shutterLockedThisRound==='boolean')state.shutterLockedThisRound=data.shutterLockedThisRound;
-  }catch(e){console.log('[LOAD] failed:',e.message);}
+    clearSaveFailureNotice();
+    return true;
+  }catch(e){
+    console.log('[SAVE] failed:',e.message);
+    showSaveFailureNotice();
+    return false;
+  }
+}
+function showSaveFailureNotice(){
+  const firstFailure=!saveFailureActive;
+  saveFailureActive=true;
+  const overlay=document.getElementById('saveFailureOverlay');
+  if(overlay)overlay.style.display='flex';
+  const app=document.getElementById('app');
+  if(app)app.inert=true;
+  if(firstFailure)document.getElementById('retryGameSaveButton')?.focus();
+  updateRoundAdvanceControls();
+}
+function clearSaveFailureNotice(){
+  const wasFailed=saveFailureActive;
+  saveFailureActive=false;
+  const overlay=document.getElementById('saveFailureOverlay');
+  if(overlay)overlay.style.display='none';
+  const app=document.getElementById('app');
+  if(app)app.inert=false;
+  if(wasFailed){
+    updateRoundAdvanceControls();
+    // 저장 실패 중 지나간 자동 완료도 저장 복구 뒤 한 번만 다시 진행한다.
+    if(state.phase==='done' && state.checkoutTarget && state.checkoutLastOutcome==='complete' && !activeCaptureTxn){
+      const target=state.checkoutTarget,session=state.sessionId,round=state.round;
+      if(checkoutAutoFinishTimer)clearTimeout(checkoutAutoFinishTimer);
+      checkoutAutoFinishTimer=setTimeout(()=>{
+        checkoutAutoFinishTimer=null;
+        if(!saveFailureActive && state.sessionId===session && state.round===round &&
+           state.checkoutTarget===target && state.checkoutLastOutcome==='complete')finishCheckout();
+      },500);
+    }
+  }
+}
+function retryGameSave(){
+  if(saveGameState())showToast('진행을 저장했습니다. 계속 진행해주세요.','unlock1');
+}
+function parseSavedSnapshot(raw){
+  if(!raw)return null;
+  try{
+    const data=JSON.parse(raw);
+    if(data?.schemaVersion!==SAVE_SCHEMA_VERSION || !data.game || !data.session?.active)return null;
+    if(numberOr(data.game.round,0)<1 || numberOr(data.game.round,0)>5)return null;
+    return data;
+  }catch(e){return null;}
+}
+function readSavedGame(){
+  try{
+    const candidates=[
+      parseSavedSnapshot(localStorage.getItem(SAVE_KEY)),
+      parseSavedSnapshot(localStorage.getItem(SAVE_BACKUP_KEY))
+    ].filter(Boolean).sort((a,b)=>numberOr(b.revision)-numberOr(a.revision));
+    return candidates[0]||null;
+  }catch(e){return null;}
+}
+function isValidCustomerCode(code){
+  return code===BIG_FAMILY_CODE || !!CUSTOMER_CATALOG[code];
+}
+function loadGameState(snapshot){
+  if(!snapshot?.game)return false;
+  const data=snapshot.game;
+  isRestoringState=true;
+  try{
+    state.objects.forEach(o=>{
+      state.codeCount[o.key]=Math.max(0,Math.min(2,numberOr(data.codeCount?.[o.key],0)));
+      state.results[o.key]=typeof data.results?.[o.key]==='boolean' ? data.results[o.key] : null;
+    });
+    state.usedCodes=new Set(Array.isArray(data.usedCodes)?data.usedCodes.filter(c=>typeof c==='string'):[]);
+    boostHistory.length=0;
+    if(Array.isArray(data.boostHistory)) boostHistory.push(...clonePlain(data.boostHistory,[]));
+    state.captureBonus=Math.max(0,numberOr(data.captureBonus));
+    state.captureUsed=Math.max(0,numberOr(data.captureUsed));
+    state.round=Math.max(1,Math.min(5,numberOr(data.round,1)));
+    state.adActive=Math.max(0,numberOr(data.adActive));
+    state.roundTotal=Math.max(0,numberOr(data.roundTotal));
+    state.roundCount=Math.max(0,numberOr(data.roundCount));
+    state.cumulativeGrossTotal=Math.max(0,numberOr(data.cumulativeGrossTotal));
+    state.myCustomerCards=(Array.isArray(data.myCustomerCards)?data.myCustomerCards:[])
+      .filter(c=>isValidCustomerCode(c?.code)).map(c=>({code:c.code,checkedOut:!!c.checkedOut}));
+    state.staffLineCards=(Array.isArray(data.staffLineCards)?data.staffLineCards:[])
+      .filter(c=>isValidCustomerCode(c?.code)).map(c=>({code:c.code}));
+    state.staffFinishedThisRound=(Array.isArray(data.staffFinishedThisRound)?data.staffFinishedThisRound:[])
+      .filter(c=>isValidCustomerCode(c?.code)).map(c=>({code:c.code}));
+    state.customerMoveCount=clonePlain(data.customerMoveCount,{});
+    state.customerProgress=clonePlain(data.customerProgress,{});
+    state.trustPenaltyCount=Math.max(0,numberOr(data.trustPenaltyCount));
+    state.checkoutTarget=isValidCustomerCode(data.checkoutTarget)?data.checkoutTarget:null;
+    state.checkoutLastOutcome=['complete','partial','failed'].includes(data.checkoutLastOutcome)?data.checkoutLastOutcome:null;
+    state.voidedKeys=new Set(Array.isArray(data.voidedKeys)?data.voidedKeys:[]);
+    state.finishCalcPromptShownThisRound=!!data.finishCalcPromptShownThisRound;
+    state.shutterLockedThisRound=!!data.shutterLockedThisRound;
+    state.shutterLockReason=data.shutterLockReason||null;
+    state.settlementVisitedThisRound=typeof data.settlementVisitedThisRound==='boolean'
+      ? data.settlementVisitedThisRound : data.shutterLockReason==='settlement';
+    state.returnedToPreviousRound=!!data.returnedToPreviousRound;
+    state.roundSetupComplete=!!data.roundSetupComplete;
+    state.bigFamilyIntroAcknowledged=!!data.bigFamilyIntroAcknowledged;
+    state.pendingCapture=clonePlain(data.pendingCapture,null);
+    state.sessionActive=true;
+    state.sessionId=snapshot.session.id||createSessionId();
+    state.sessionCreatedAt=numberOr(snapshot.session.createdAt,Date.now());
+    saveRevision=Math.max(saveRevision,numberOr(snapshot.revision));
+    restoredFlowState=clonePlain(snapshot.flow,null);
+    previousRoundRecovery=validatePreviousRoundRecovery(snapshot.previousRoundRecovery);
+
+    // 카메라 스트림은 복원할 수 없다. 촬영 중 종료됐다면 확정 전만 횟수를 돌려준다.
+    if(state.pendingCapture?.status==='reserved'){
+      state.captureUsed=Math.max(0,numberOr(state.pendingCapture.captureUsedBefore,state.captureUsed));
+      const before=state.pendingCapture.before||{};
+      state.checkoutLastOutcome=Object.prototype.hasOwnProperty.call(before,'checkoutLastOutcome')
+        ? before.checkoutLastOutcome : state.checkoutLastOutcome;
+      state.roundTotal=Math.max(0,numberOr(before.roundTotal,state.roundTotal));
+      state.roundCount=Math.max(0,numberOr(before.roundCount,state.roundCount));
+      state.cumulativeGrossTotal=Math.max(0,numberOr(before.cumulativeGrossTotal,state.cumulativeGrossTotal));
+      state.customerProgress=clonePlain(before.customerProgress,state.customerProgress);
+      state.voidedKeys=new Set(Array.isArray(before.voidedKeys)?before.voidedKeys:[]);
+      state.objects.forEach(o=>{
+        if(before.results && typeof before.results[o.key]==='boolean') state.results[o.key]=before.results[o.key];
+        else state.results[o.key]=null;
+      });
+      resumeRecoveryNotice='중단된 촬영은 결과 확정 전이어서 촬영 횟수를 복구했습니다.';
+      state.phase='idle';
+    } else if(state.pendingCapture?.status==='committed'){
+      resumeRecoveryNotice='이미 확정된 촬영 결과를 그대로 복원했습니다.';
+      state.phase='done';
+    } else {
+      state.phase=(data.phase==='done' && state.checkoutLastOutcome)?'done':'idle';
+    }
+    state.pendingCapture=null;
+    return true;
+  }catch(e){
+    console.log('[LOAD] failed:',e.message);
+    return false;
+  }finally{
+    isRestoringState=false;
+  }
 }
 function clearGameState(){
-  try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+  try{
+    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(SAVE_BACKUP_KEY);
+    localStorage.removeItem(LEGACY_SAVE_KEY);
+  }catch(e){}
 }
-// 2026-08-16i 추가: "전체 초기화" 버튼 클릭 시 바로 실행하지 않고 확인 팝업(취소 가능)을 먼저 띄움
-function openFullResetConfirm(){
-  document.getElementById('fullResetConfirmOverlay').style.display='flex';
-}
-function closeFullResetConfirm(){
-  document.getElementById('fullResetConfirmOverlay').style.display='none';
-}
-function confirmFullResetClick(){
-  closeFullResetConfirm();
-  handleFullReset();
-}
-function handleFullReset(){
-  // 2026-08-16i 변경: 네이티브 confirm() 대신 위 확인 팝업(openFullResetConfirm)을 거쳐서만 호출됨
+function resetGameValuesForNewSession(){
   state.objects.forEach(o=>{state.codeCount[o.key]=INITIAL_CHIP_COUNT;state.results[o.key]=null;});
   state.usedCodes.clear();
   boostHistory.length=0;
@@ -1212,26 +1508,211 @@ function handleFullReset(){
   state.roundTotal=0;
   state.roundCount=0;
   state.cumulativeGrossTotal=0;
-  // 2026-08-16b 추가: 다음 팀으로 넘어갈 때 고객카드 큐/신뢰도 페널티도 완전히 초기화
   state.myCustomerCards=[];
   state.checkoutTarget=null;
   state.checkoutLastOutcome=null;
   state.trustPenaltyCount=0;
-  // 2026-08-16d 추가: 직원 계산대 줄도 다음 팀으로 넘어갈 때 함께 비움
   state.staffLineCards=[];
   state.staffFinishedThisRound=[];
-  // 2026-08-17 추가: 이동 횟수 기록도 다음 팀으로 넘어갈 때 함께 비움
   state.customerMoveCount={};
-  // 2026-08-16k 추가: "처리 고객 현황" 기록도 다음 팀으로 넘어갈 때 함께 비움
   state.customerProgress={};
-  // 2026-08-18 추가: 1라운드 데이터카드 입력 카운트/셔터 잠금도 다음 팀으로 넘어갈 때 함께 비움
+  state.voidedKeys=new Set();
   state.finishCalcPromptShownThisRound=false;
   state.shutterLockedThisRound=false;
-  clearGameState();
+  state.shutterLockReason=null;
+  state.settlementVisitedThisRound=false;
+  state.returnedToPreviousRound=false;
+  state.roundSetupComplete=false;
+  state.bigFamilyIntroAcknowledged=false;
+  state.pendingCapture=null;
+  state.liveLevel=0;
+  state.phase=state.cameraStream?'camera':'idle';
+  state.sessionActive=true;
+  state.sessionId=createSessionId();
+  state.sessionCreatedAt=Date.now();
+  restoredFlowState=null;
+  resumeRecoveryNotice='';
+  previousRoundRecovery=null;
+  previousRoundConfirmOpen=false;
+}
+function hideTransientOverlays(){
+  [
+    'resumeGameOverlay','roundAdvanceConfirmOverlay','settlementRequiredOverlay','previousRoundConfirmOverlay','trustPenaltyOverlay','abandonConfirmOverlay',
+    'roundSettleOverlay','finalSettleOverlay','finishCalcConfirmOverlay','bigFamilyAppearOverlay',
+    'customerPickerOverlay','lineAssignOverlay','processedStatusOverlay'
+  ].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  clearAllToasts();
+}
+function renderRestoredGameState(){
   updateRoundTitle();
-  renderObjList();renderHistList();updateCaptureUI();renderScore();
-  renderMyCustomerQueue();renderTrustPenaltyBadge();updateCheckoutBar();updateSwapLinesButton();
-  showToast('🔄 전체 초기화 완료 — 다음 팀 시작','error');
+  renderObjList();
+  renderHistList();
+  updateCaptureUI();
+  renderScore();
+  renderMyCustomerQueue();
+  renderTrustPenaltyBadge();
+  updateCheckoutBar();
+  updateSwapLinesButton();
+  const overlay=document.getElementById('vfOverlay');
+  const fill=document.getElementById('vfFill');
+  if(overlay)overlay.style.display='none';
+  if(fill)fill.style.width='0%';
+  document.getElementById('btnShutter').classList.remove('go');
+  document.getElementById('btnReset').disabled=
+    state.phase!=='done' || state.shutterLockedThisRound || state.checkoutLastOutcome==='complete';
+  const cameraLive=isCameraStreamLive();
+  document.getElementById('topStatus').textContent=cameraLive?'CAMERA ON':'STANDBY';
+  document.getElementById('btnCamera').disabled=false;
+  document.getElementById('btnCamera').textContent=cameraLive?'카메라 재연결':'카메라 시작';
+  if(cameraLive){
+    state.phase='camera';
+    document.getElementById('cameraVideo').style.display='block';
+    document.getElementById('frozenCanvas').style.display='none';
+    startLiveDebug();
+  }
+  if(state.shutterLockedThisRound){
+    document.getElementById('camHint').textContent=state.shutterLockReason==='settlement'
+      ? '● 정산이 완료되어 이번 라운드 촬영이 잠겨 있습니다.'
+      : '● 이번 라운드는 촬영이 잠겨 있습니다.';
+  }else if(state.phase==='done' && state.checkoutLastOutcome){
+    document.getElementById('camHint').textContent='● 직전 촬영 결과가 복원되었습니다. 계속하려면 카메라를 시작하세요.';
+  }else{
+    document.getElementById('camHint').textContent='● 진행 상태가 복원되었습니다. 카메라를 시작하세요.';
+  }
+  updateShutterState();
+  updateRoundAdvanceControls();
+}
+function restoreSavedFlow(){
+  const flow=restoredFlowState;
+  restoredFlowState=null;
+  isRestoringState=true;
+  try{
+    // 완전 결제는 이미 점수와 촬영 횟수가 확정된 상태다. 저장된 모달보다 먼저 고객 완료를
+    // 재개해야 오래된 줄 배치/정산 화면 때문에 같은 고객이 영구 대기 상태로 남지 않는다.
+    if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+      const target=state.checkoutTarget,session=state.sessionId,round=state.round;
+      if(checkoutAutoFinishTimer)clearTimeout(checkoutAutoFinishTimer);
+      checkoutAutoFinishTimer=setTimeout(()=>{
+        checkoutAutoFinishTimer=null;
+        if(state.sessionId===session && state.round===round &&
+           state.checkoutTarget===target && state.checkoutLastOutcome==='complete')finishCheckout();
+      },500);
+      return;
+    }
+    if(flow?.lineAssign?.mode){
+      laRoundStartPending=!!flow.lineAssign.roundStartPending;
+      laDrawOrigin=clonePlain(flow.lineAssign.drawOrigin,null);
+      const opened=openLineAssign(flow.lineAssign.mode,flow.lineAssign.stagingCodes||[]);
+      if(opened){
+        laDrawOrigin=clonePlain(flow.lineAssign.drawOrigin,null);
+        laDrawBatchCodes=Array.isArray(flow.lineAssign.drawBatchCodes)?[...flow.lineAssign.drawBatchCodes]:[];
+        laStagingCodes=Array.isArray(flow.lineAssign.stagingCodes)?[...flow.lineAssign.stagingCodes]:[];
+        renderLineAssign();
+        return;
+      }
+      laRoundStartPending=false;
+    }
+    if(flow?.customerPicker?.mode){
+      openCustomerPicker(flow.customerPicker.mode,flow.customerPicker.quota||undefined);
+      cpSelected={
+        single:new Set(flow.customerPicker.selectedSingle||[]),
+        multi:new Set(flow.customerPicker.selectedMulti||[])
+      };
+      cpActiveTab=flow.customerPicker.activeTab||'single';
+      renderCustomerPickerLists();
+      updatePreviousRoundControls();
+      if(cpMode!=='targetSelect')switchCustomerPickerTab(cpActiveTab);
+      return;
+    }
+    if(flow?.overlays?.finalSettle){showFinalSettlePopup();return;}
+    if(flow?.overlays?.roundSettle){showRoundSettlePopup(state.roundTotal||0);return;}
+    if(flow?.overlays?.bigFamily){showBigFamilyAppearPopup();return;}
+    if(state.round===3 && !state.bigFamilyIntroAcknowledged &&
+       state.staffLineCards.some(c=>c.code===BIG_FAMILY_CODE)){
+      showBigFamilyAppearPopup();
+      return;
+    }
+    if(!state.roundSetupComplete){startRoundCustomerDraw(state.round);return;}
+    if(!state.checkoutTarget && pendingCustomerCards().length>0 && getRemainingCaptures()>0){
+      promptCheckoutTarget();
+    }
+  }finally{
+    isRestoringState=false;
+  }
+}
+function startFreshGameSession(){
+  clearGameState();
+  resetGameValuesForNewSession();
+  hideTransientOverlays();
+  renderRestoredGameState();
+  document.getElementById('camHint').textContent=isCameraStreamLive()
+    ? '● 이번 라운드 고객을 선택해주세요.' : '카메라 시작 버튼을 눌러주세요.';
+  saveGameState();
+  showToast(`AI 캡처 ${getMaxCaptures()}회로 시작합니다`,'unlock1');
+  setTimeout(()=>{startRoundCustomerDraw(state.round);},500);
+}
+function showResumeGamePrompt(){
+  if(!pendingResumeData){startFreshGameSession();return;}
+  const savedAt=numberOr(pendingResumeData.savedAt);
+  const when=savedAt?new Date(savedAt).toLocaleString('ko-KR'):'저장 시각 확인 불가';
+  document.getElementById('resumeGameMsg').textContent=
+    `마지막 저장: ${when}\n\n새로 시작하려면 '새 게임 시작'을, 저장된 게임을 계속하려면 '이어하기'를 누르세요.`;
+  document.getElementById('resumeGameOverlay').style.display='flex';
+}
+function resumeSavedGame(){
+  const snapshot=pendingResumeData;
+  pendingResumeData=null;
+  document.getElementById('resumeGameOverlay').style.display='none';
+  if(!loadGameState(snapshot)){
+    showToast('저장 정보를 복원하지 못해 새 게임을 시작합니다','error');
+    startFreshGameSession();
+    return;
+  }
+  hideTransientOverlays();
+  renderRestoredGameState();
+  restoreSavedFlow();
+  saveGameState();
+  showToast(resumeRecoveryNotice||`💾 ${state.round}라운드 진행을 복원했습니다`,'unlock1');
+  resumeRecoveryNotice='';
+}
+let fullResetFromResume=false;
+function startNewGameFromResume(){
+  fullResetFromResume=true;
+  document.getElementById('resumeGameOverlay').style.display='none';
+  openFullResetConfirm();
+}
+// 2026-08-16i 추가: "전체 초기화" 버튼 클릭 시 바로 실행하지 않고 확인 팝업(취소 가능)을 먼저 띄움
+function openFullResetConfirm(){
+  document.getElementById('fullResetConfirmOverlay').style.display='flex';
+}
+function closeFullResetConfirm(){
+  document.getElementById('fullResetConfirmOverlay').style.display='none';
+  if(fullResetFromResume){
+    fullResetFromResume=false;
+    document.getElementById('resumeGameOverlay').style.display='flex';
+  }
+}
+function confirmFullResetClick(){
+  fullResetFromResume=false;
+  pendingResumeData=null;
+  document.getElementById('fullResetConfirmOverlay').style.display='none';
+  handleFullReset();
+}
+function handleFullReset(){
+  // 2026-08-16i 변경: 네이티브 confirm() 대신 위 확인 팝업(openFullResetConfirm)을 거쳐서만 호출됨
+  cancelLaDrag();
+  invalidateCaptureCallbacks('full-reset');
+  cancelPendingCameraConnection();
+  resetRoundTransitionState();
+  pendingResumeData=null;
+  clearGameState();
+  resetGameValuesForNewSession();
+  hideTransientOverlays();
+  renderRestoredGameState();
+  document.getElementById('camHint').textContent=isCameraStreamLive()
+    ? '● 이번 게임의 고객을 선택해주세요.' : '카메라 시작 버튼을 눌러주세요.';
+  saveGameState();
+  showToast('🔄 전체 초기화 완료 — 게임 시작','error');
   if(!state.practiceMode){
     setTimeout(()=>{ startRoundCustomerDraw(state.round); }, 500);
   }
@@ -1431,6 +1912,8 @@ function renderCheckoutTargetName(){
 // ── ① 라운드 시작 시: 고객카드 뽑기 팝업 ──
 function startRoundCustomerDraw(round){
   state.checkoutTarget=null;
+  state.roundSetupComplete=false;
+  saveGameState();
   const eff=getEffectiveRoundQuota(round);
   // 2026-08-18 추가: cap(트리밍된 유연 모드)이 있으면 그 값이 실제 배정 가능 인원수다.
   const effTotal = eff.cap!=null ? eff.cap : (eff.single+eff.multi);
@@ -1439,6 +1922,9 @@ function startRoundCustomerDraw(round){
     showToast(`⚠ AI계산대 줄 + 직원 계산대 줄 모두 한도(각 ${MAX_HELD_CUSTOMER_CARDS}장)에 걸려 ${overflow}명은 이번 라운드에 배정하지 않았습니다.`,'error');
   }
   if(effTotal===0){
+    state.roundSetupComplete=true;
+    updateRoundAdvanceControls();
+    saveGameState();
     promptCheckoutTarget();
     return;
   }
@@ -1456,11 +1942,18 @@ function enterCheckoutCameraReady(){
   renderObjList();
   document.getElementById('liveProduct').classList.remove('show');
   document.getElementById('checkoutActionBar').style.display='none';
-  if(state.cameraStream){
+  resetCaptureVisuals();
+  document.getElementById('btnReset').disabled=true;
+  if(isCameraStreamLive()){
+    document.getElementById('cameraVideo').style.display='block';
+    document.getElementById('frozenCanvas').style.display='none';
     state.phase='camera';
     document.getElementById('topStatus').textContent='CAMERA ON';
+    startLiveDebug();
   } else {
+    if(state.cameraStream && !isCameraStreamLive())state.cameraStream=null;
     state.phase='idle';
+    document.getElementById('topStatus').textContent='STANDBY';
   }
   setBadge('idle');
   document.getElementById('camHint').textContent='● 카드를 대고 셔터를 눌러 계산하세요.';
@@ -1483,11 +1976,13 @@ function switchCheckoutTarget(code){
   enterCheckoutCameraReady();
   renderMyCustomerQueue();
   updateShutterState();
+  saveGameState();
 }
 
 // 2026-08-16b 추가: "신뢰도-1" 페널티 (부분결제로 완료 처리 / 고객카드 포기)
 const TRUST_PENALTY_AMOUNT=1000;
 function applyTrustPenalty(code, reasonLabel){
+  lockPreviousRoundRecovery('신뢰도 페널티가 발생했습니다.');
   state.trustPenaltyCount=(state.trustPenaltyCount||0)+1;
   state.roundTotal=Math.max(0,(state.roundTotal||0)-TRUST_PENALTY_AMOUNT);
   renderScore();
@@ -1530,6 +2025,8 @@ function confirmAbandonCheckout(){
 }
 function abandonCheckoutCard(){
   if(!state.checkoutTarget)return;
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  lockPreviousRoundRecovery('고객카드를 포기했습니다.');
   const code=state.checkoutTarget;
   applyTrustPenalty(code, '고객카드 포기');
   const idx=state.myCustomerCards.findIndex(c=>c.code===code);
@@ -1539,6 +2036,7 @@ function abandonCheckoutCard(){
   document.getElementById('checkoutActionBar').style.display='none';
   renderMyCustomerQueue();
   finishCheckoutFlowAdvance();
+  saveGameState();
 }
 
 // ── ② "지금 계산할 고객" 자동 지정 (남은 내 고객카드 중 맨 앞) ──
@@ -1551,16 +2049,20 @@ function promptCheckoutTarget(){
     state.checkoutTarget=null;
     renderMyCustomerQueue();
     updateCheckoutBar();
+    saveGameState();
     return;
   }
   state.checkoutTarget=pending[0].code;
   enterCheckoutCameraReady(); // 2026-08-16h: 직전 고객의 phase='done' 잔류로 액션바가 바로 뜨는 버그 방지
   renderMyCustomerQueue();
   updateShutterState();
+  saveGameState();
 }
 
 // ── ③ 고객카드 구매(비밀번호 게이트) ──
 function onClickBuyCustomer(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  lockPreviousRoundRecovery('추가 고객카드 구매를 시작했습니다.');
   document.getElementById('buyPasswordRow').style.display='flex';
   document.getElementById('buyPasswordInput').value='';
   document.getElementById('buyPasswordInput').focus();
@@ -1616,6 +2118,8 @@ function finishCheckoutFlowAdvance(){
 // ── "계산 완료" — 지금 체크아웃 중인 고객을 내 리스트에서 제거하고 다음 고객으로 ──
 function finishCheckout(){
   if(!state.checkoutTarget)return;
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  lockPreviousRoundRecovery('고객 결제를 완료했습니다.');
   const code=state.checkoutTarget;
   if(state.checkoutLastOutcome && state.checkoutLastOutcome!=='complete'){
     applyTrustPenalty(code, '일부 상품만 결제된 채로 계산 완료 처리됨');
@@ -1627,6 +2131,8 @@ function finishCheckout(){
   document.getElementById('checkoutActionBar').style.display='none';
   renderMyCustomerQueue();
   finishCheckoutFlowAdvance();
+  updateRoundAdvanceControls();
+  saveGameState();
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -1640,6 +2146,7 @@ let cpSelected={single:new Set(), multi:new Set()}; // roundDraw 전용 임시 �
 let cpActiveTab='single';
 
 function openCustomerPicker(mode, quota){
+  if(roundAdvanceState!=='idle')return false;
   cpMode=mode;
   cpQuota=quota||null;
   cpSelected={single:new Set(), multi:new Set()};
@@ -1678,16 +2185,21 @@ function openCustomerPicker(mode, quota){
     switchCustomerPickerTab('single');
   }
   overlay.style.display='flex';
+  saveGameState();
+  updatePreviousRoundControls();
+  return true;
 }
 function closeCustomerPicker(){
   document.getElementById('customerPickerOverlay').style.display='none';
   cpMode=null;
+  saveGameState();
 }
 function switchCustomerPickerTab(tab){
   cpActiveTab=tab;
   document.querySelectorAll('.cp-tab').forEach(b=>b.classList.toggle('active', b.dataset.cptab===tab));
   document.getElementById('customerPickerListSingle').style.display = tab==='single' ? 'grid' : 'none';
   document.getElementById('customerPickerListMulti').style.display = tab==='multi' ? 'grid' : 'none';
+  saveGameState();
 }
 function cpCodesForMode(){
   // targetSelect: 내 큐에 남은 고객만. roundDraw/purchase: 전체 24종.
@@ -1738,6 +2250,7 @@ function updateCpCounterAndConfirm(){
   confirmBtn.disabled = (sCount!==sNeed || mCount!==mNeed);
 }
 function onCustomerPickerCardClick(code){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   if(cpMode==='roundDraw'){
     const cat=isSingleCode(code)?'single':'multi';
     if(cpSelected[cat].has(code)){
@@ -1761,6 +2274,8 @@ function onCustomerPickerCardClick(code){
       cpSelected[cat].add(code);
     }
     renderCustomerPickerLists();
+    updatePreviousRoundControls();
+    saveGameState();
   } else if(cpMode==='purchase'){
     // 구매는 1장 선택 즉시 확정(가격은 실물 재화로 별도 지불 — 앱에서 차감하지 않음)
     // 2026-08-16d 변경: 두 줄 다 꽉 찼으면 놓을 자리가 없으므로 구매 자체를 막는다.
@@ -1768,6 +2283,7 @@ function onCustomerPickerCardClick(code){
       showToast(`AI계산대 줄과 직원 계산대 줄이 모두 ${MAX_HELD_CUSTOMER_CARDS}장씩 꽉 찼습니다 — 자리를 비운 뒤 다시 구매해주세요`,'error');
       return;
     }
+    lockPreviousRoundRecovery('추가 고객카드를 구매했습니다.');
     closeCustomerPicker();
     showToast(`구매 완료: ${CUSTOMER_CATALOG[code]?CUSTOMER_CATALOG[code].title:code}`,'unlock1');
     // 2026-08-17 변경(세린님 지시): 구매는 한 번에 한 개, 한 번만 가능 — 구매하는 순간
@@ -1784,10 +2300,12 @@ function onCustomerPickerCardClick(code){
     closeCustomerPicker();
     renderMyCustomerQueue();
     updateShutterState();
+    saveGameState();
   }
 }
 function confirmCustomerPicker(){
   if(cpMode!=='roundDraw')return;
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   // 2026-08-18 변경(세린님 지시): 트리밍된 경우엔 단일/다중 구분 없이 합계로만 검사하되,
   // 슬롯이 다 차서 어쩔 수 없는 경우가 아니라면 설정된 수만큼 정확히 다 선택해야 한다.
   if(cpQuota.cap!=null){
@@ -1797,11 +2315,12 @@ function confirmCustomerPicker(){
     // 2026-08-18 변경(세린님 지시): "이하"가 아니라 정확히 일치해야 확인 가능(버튼이 이미 disabled라 정상 흐름에선 못 옴)
     if(cpSelected.single.size!==single || cpSelected.multi.size!==multi)return;
   }
+  lockPreviousRoundRecovery('새 라운드 고객 선택을 완료했습니다.');
   const newCodes=[...cpSelected.single, ...cpSelected.multi];
   closeCustomerPicker();
   // 2026-08-16d 변경: 이제 뽑힌 고객을 곧바로 AI계산대 줄에 넣지 않고, "줄 배치" 화면에서
   // AI계산대 줄/직원 계산대 줄 중 하나로 직접 드래그해서 배정하게 한다.
-  if(newCodes.length===0){ promptCheckoutTarget(); return; }
+  if(newCodes.length===0){ state.roundSetupComplete=true; promptCheckoutTarget(); return; }
   // 2026-08-17 추가: "뒤로" 버튼을 눌렀을 때 되돌아갈 수 있도록 출처(라운드 뽑기+할당량)를 기록
   laDrawOrigin={mode:'roundDraw', quota:{...cpQuota}};
   openLineAssign('draw', newCodes);
@@ -1820,7 +2339,13 @@ let laDrawOrigin=null;    // draw 모드 진입 출처: {mode:'roundDraw',quota}
 let laDrawBatchCodes=[];  // draw 모드로 들어올 때 원래 있던 카드 목록(뒤로가기 시 전부 되돌리기 위함)
 
 function openLineAssign(mode, newCodes){
-  if(state.phase==='analyzing'){ showToast('촬영/분석 중에는 줄을 배치할 수 없어요','error'); return; }
+  if(saveFailureActive || previousRoundConfirmOpen)return false;
+  if(roundAdvanceState!=='idle')return false;
+  if(state.phase==='analyzing'){ showToast('촬영/분석 중에는 줄을 배치할 수 없어요','error'); return false; }
+  if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+    showToast('완료된 고객을 정리하고 있습니다. 잠시 후 다시 눌러주세요','unlock1');
+    return false;
+  }
   laMode=mode;
   laStagingCodes=mode==='draw' ? [...newCodes] : [];
   // 2026-08-17 추가: draw 모드가 아니면(=swap/고객 줄 현황) "뒤로" 관련 상태는 의미가 없으므로 비운다.
@@ -1835,13 +2360,18 @@ function openLineAssign(mode, newCodes){
     : '카드를 드래그해서 AI계산대 줄과 직원 계산대 줄 사이를 자유롭게 옮길 수 있어요.';
   renderLineAssign();
   document.getElementById('lineAssignOverlay').style.display='flex';
+  saveGameState();
+  updatePreviousRoundControls();
+  return true;
 }
 function closeLineAssign(){
+  cancelLaDrag();
   document.getElementById('lineAssignOverlay').style.display='none';
   laMode=null;
   laStagingCodes=[];
   laDrawOrigin=null;
   laDrawBatchCodes=[];
+  saveGameState();
 }
 // 2026-08-17 추가(세린님 지시): "새 고객 배치하기" 화면의 "뒤로" 버튼 — 이번에 뽑은/구매한
 // 카드들을 (스테이징이든 이미 AI/직원 줄에 놓았든) 전부 되돌리고, 원래의 "고객카드 선택"
@@ -1869,6 +2399,7 @@ function laGoBack(){
       cpSelected[isSingleCode(code)?'single':'multi'].add(code);
     });
     renderCustomerPickerLists();
+    saveGameState();
   } else if(origin.mode==='purchase'){
     openCustomerPicker('purchase');
   }
@@ -1878,7 +2409,7 @@ function laCardTitle(code){
   return CUSTOMER_CATALOG[code]?CUSTOMER_CATALOG[code].title:code;
 }
 // 2026-08-17 추가(세린님 지시): 직원 줄 ↔ AI계산대 줄 사이 이동 횟수를 고객명 옆에 표시.
-// 3회를 초과(4회째부터)한 경우엔 경고 색으로 강조한다.
+// 1~2회는 무료, 3회째부터 경고 색으로 강조한다.
 const MOVE_PENALTY_THRESHOLD=2; // 2026-08-17 변경(세린님 지시): 3회째 이동부터 신뢰도-1 적용
 function laMoveCountLabel(code){
   const n=state.customerMoveCount[code]||0;
@@ -1910,6 +2441,8 @@ function laCardChip(code, zone){
         disabledAttr=' disabled title="5라운드부터 결제 가능"';
       } else if(!isFront){
         disabledAttr=' disabled title="줄 순서대로 처리해주세요."';
+      } else if(!isBigFamily && state.staffFinishedThisRound.length>=1){
+        disabledAttr=' disabled title="이번 라운드에는 이미 고객 1명을 완료했습니다."';
       }
       doneBtn=`<button type="button" class="la-chip-done" onpointerdown="event.stopPropagation()" onclick="finishStaffLineCard('${code}')"${disabledAttr}>${doneLabel}</button>`;
     }
@@ -1924,6 +2457,7 @@ function laCardChip(code, zone){
 // 즉시 사라지지 않고 이번 라운드 동안 별도 목록(staffFinishedThisRound)에 남아
 // "복구" 버튼으로 되돌릴 수 있다 — 다음 라운드로 넘어가면 이 목록은 비워진다.
 function finishStaffLineCard(code){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   const isBigFamily=code===BIG_FAMILY_CODE;
   // 2026-08-16k 추가: 세린님 지시 — 직원 계산대 줄도 순서대로(FIFO) 처리해야 하므로, 줄의
   // 맨 앞 카드가 아니면 완료 처리를 막는다(대가족 카드도 예외 없음).
@@ -1943,6 +2477,7 @@ function finishStaffLineCard(code){
   }
   const idx=state.staffLineCards.findIndex(c=>c.code===code);
   if(idx<0) return;
+  lockPreviousRoundRecovery('직원 계산대에서 고객을 완료 처리했습니다.');
   const [entry]=state.staffLineCards.splice(idx,1);
   state.staffFinishedThisRound.push(entry);
   // 2026-08-17 변경(세린님 지시): 라운드당 정산 가격은 "AI계산대 줄 계산 완료 가격 +
@@ -1966,6 +2501,7 @@ function finishStaffLineCard(code){
   renderScore();
   renderLineAssign();
   renderMyCustomerQueue();
+  updateRoundAdvanceControls();
   saveGameState();
   showToast(isBigFamily
     ? `✅ 대가족 카드 — 직원 계산대에서 완료 처리됨 (₩${price.toLocaleString()} 반영)`
@@ -1978,12 +2514,14 @@ function laFinishedChip(code){
   </div>`;
 }
 function restoreStaffLineCard(code){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   const idx=state.staffFinishedThisRound.findIndex(c=>c.code===code);
   if(idx<0) return;
   if(state.staffLineCards.length>=MAX_STAFF_LINE_CARDS){
     showToast(`직원 계산대 줄이 이미 ${MAX_STAFF_LINE_CARDS}장 꽉 차서 복구할 수 없습니다`,'error');
     return;
   }
+  lockPreviousRoundRecovery('직원 계산대의 완료 처리를 변경했습니다.');
   const [entry]=state.staffFinishedThisRound.splice(idx,1);
   state.staffLineCards.push(entry);
   // 2026-08-17 변경(세린님 지시): 완료 처리 시 더했던 가격(일반 카드도 포함)을 복구 시 그대로 되돌린다
@@ -1995,6 +2533,7 @@ function restoreStaffLineCard(code){
   renderScore();
   renderLineAssign();
   renderMyCustomerQueue();
+  updateRoundAdvanceControls();
   saveGameState();
   showToast(`↩ ${laCardTitle(entry.code)} 고객 — 직원 계산대 줄로 복구됨`,'unlock1');
 }
@@ -2055,6 +2594,9 @@ function laZoneAtPoint(x,y){
   return zoneEl ? zoneEl.dataset.zone : null;
 }
 function startLaDrag(ev, chip){
+  if(ev.isPrimary===false)return;
+  if(ev.pointerType==='mouse' && ev.button!==0)return;
+  if(laDrag)return;
   ev.preventDefault();
   const code=chip.dataset.code;
   const fromZone=chip.dataset.zone;
@@ -2069,12 +2611,16 @@ function startLaDrag(ev, chip){
   ghost.style.zIndex='2000';
   document.body.appendChild(ghost);
   chip.style.opacity='0.35';
-  laDrag={code, fromZone, chip, ghost, offsetX:ev.clientX-rect.left, offsetY:ev.clientY-rect.top};
+  const lostHandler=()=>cancelLaDrag();
+  laDrag={code, fromZone, chip, ghost, pointerId:ev.pointerId, offsetX:ev.clientX-rect.left, offsetY:ev.clientY-rect.top,lostHandler};
+  chip.addEventListener('lostpointercapture',lostHandler,{once:true});
+  try{chip.setPointerCapture(ev.pointerId);}catch(e){}
   document.onpointermove=onLaDragMove;
   document.onpointerup=onLaDragEnd;
+  document.onpointercancel=cancelLaDrag;
 }
 function onLaDragMove(ev){
-  if(!laDrag)return;
+  if(!laDrag || (laDrag.pointerId!=null && ev.pointerId!==laDrag.pointerId))return;
   laDrag.ghost.style.left=(ev.clientX-laDrag.offsetX)+'px';
   laDrag.ghost.style.top=(ev.clientY-laDrag.offsetY)+'px';
   document.querySelectorAll('.la-dropzone').forEach(z=>z.classList.remove('la-dragover'));
@@ -2085,17 +2631,39 @@ function onLaDragMove(ev){
   }
 }
 function onLaDragEnd(ev){
-  if(!laDrag)return;
+  if(!laDrag || (laDrag.pointerId!=null && ev.pointerId!==laDrag.pointerId))return;
+  cleanupLaDrag(ev,true);
+}
+function cancelLaDrag(){
+  cleanupLaDrag(null,false);
+}
+function cleanupLaDrag(ev,commit){
+  if(!laDrag){
+    document.onpointermove=null;
+    document.onpointerup=null;
+    document.onpointercancel=null;
+    document.querySelectorAll('.la-chip-ghost').forEach(g=>g.remove());
+    document.querySelectorAll('.la-dropzone').forEach(z=>z.classList.remove('la-dragover'));
+    return;
+  }
+  const drag=laDrag;
+  // 먼저 전역 상태를 비워 releasePointerCapture가 만드는 추가 이벤트를 무해화한다.
+  laDrag=null;
   document.onpointermove=null;
   document.onpointerup=null;
+  document.onpointercancel=null;
   document.querySelectorAll('.la-dropzone').forEach(z=>z.classList.remove('la-dragover'));
-  const targetZone=laZoneAtPoint(ev.clientX, ev.clientY);
-  laDrag.ghost.remove();
-  if(laDrag.chip) laDrag.chip.style.opacity='';
-  const {code, fromZone}=laDrag;
-  laDrag=null;
-  if(targetZone && targetZone!==fromZone){
-    moveLaCard(code, fromZone, targetZone);
+  if(drag.ghost?.isConnected)drag.ghost.remove();
+  if(drag.chip){
+    drag.chip.style.opacity='';
+    if(drag.lostHandler)drag.chip.removeEventListener('lostpointercapture',drag.lostHandler);
+    try{
+      if(drag.pointerId!=null && drag.chip.hasPointerCapture?.(drag.pointerId))drag.chip.releasePointerCapture(drag.pointerId);
+    }catch(e){}
+  }
+  const targetZone=(commit&&ev)?laZoneAtPoint(ev.clientX,ev.clientY):null;
+  if(targetZone && targetZone!==drag.fromZone){
+    moveLaCard(drag.code,drag.fromZone,targetZone);
   }
 }
 function cancelCheckoutTargetForMove(){
@@ -2115,6 +2683,12 @@ function cancelCheckoutTargetForMove(){
   updateShutterState();
 }
 function moveLaCard(code, fromZone, toZone){
+  if(saveFailureActive || previousRoundConfirmOpen || fromZone===toZone)return;
+  if(!['staging','ai','staff'].includes(toZone))return;
+  const sourceExists=fromZone==='staging'?laStagingCodes.includes(code):
+    fromZone==='ai'?state.myCustomerCards.some(c=>c.code===code&&!c.checkedOut):
+    fromZone==='staff'?state.staffLineCards.some(c=>c.code===code):false;
+  if(!sourceExists)return;
   // 2026-08-16i 추가: 대가족 카드는 직원 계산대 줄에만 있을 수 있음 — AI계산대 줄로 이동 금지
   if(code===BIG_FAMILY_CODE && toZone==='ai'){
     showToast('대가족 카드는 직원 계산대 줄에만 놓을 수 있습니다','error');
@@ -2137,6 +2711,7 @@ function moveLaCard(code, fromZone, toZone){
       return;
     }
   }
+  lockPreviousRoundRecovery('고객카드 배치를 변경했습니다.');
   if(fromZone==='staging'){
     laStagingCodes=laStagingCodes.filter(c=>c!==code);
   } else if(fromZone==='ai'){
@@ -2158,7 +2733,7 @@ function moveLaCard(code, fromZone, toZone){
   }
   // 2026-08-17 추가(세린님 지시): 직원 줄 ↔ AI계산대 줄 사이의 실제 이동만 횟수로 센다
   // (새로 뽑은/구매한 카드를 처음 줄에 배치하는 것(staging→줄)은 "이동"이 아니므로 제외).
-  // 한 라운드 안에 같은 고객을 3회 초과(=4회째부터)로 옮기면 매번 신뢰도-1(₩1,000 차감).
+  // 한 라운드 안에 같은 고객을 3회째부터 옮기면 매번 신뢰도-1(₩1,000 차감).
   if((fromZone==='ai'||fromZone==='staff') && (toZone==='ai'||toZone==='staff')){
     state.customerMoveCount[code]=(state.customerMoveCount[code]||0)+1;
     const n=state.customerMoveCount[code];
@@ -2185,7 +2760,12 @@ function confirmLineAssign(){
     }
   }
   const wasDraw=laMode==='draw';
+  const drawOrigin=clonePlain(laDrawOrigin,null);
   const wasRoundStart=laRoundStartPending;
+  if(wasDraw && drawOrigin?.mode==='roundDraw'){
+    state.roundSetupComplete=true;
+    updateRoundAdvanceControls();
+  }
   laRoundStartPending=false;
   closeLineAssign();
   if(wasDraw) promptCheckoutTarget();
@@ -3091,6 +3671,21 @@ function updateStripeSlots(sections, threshold){
 }
 
 // ── 부트 ──
+let bootReady=false;
+let coverStartRequested=false;
+let sessionChoiceShown=false;
+let recoveryLifecycleAttached=false;
+function attachRecoveryLifecycleHandlers(){
+  if(recoveryLifecycleAttached)return;
+  recoveryLifecycleAttached=true;
+  window.addEventListener('blur',cancelLaDrag);
+  window.addEventListener('orientationchange',cancelLaDrag);
+  window.addEventListener('pagehide',()=>{cancelLaDrag();saveGameState();});
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){cancelLaDrag();saveGameState();}
+    else checkActiveCaptureStall();
+  });
+}
 async function boot(){
   setLoadMsg('초기화 중...');
   MANIFEST.objects.filter(o=>o.enabled!==false)
@@ -3098,8 +3693,8 @@ async function boot(){
     .forEach(o=>{state.objects.push(o);state.codeCount[o.key]=INITIAL_CHIP_COUNT;state.results[o.key]=null;});  // 게임용: 0단계 시작 (데이터 학습 필요)
   MANIFEST.unlockCodes.forEach(c=>{state.codeMap[c.code.toUpperCase()]=c.key;});
   MANIFEST.boostCodes.forEach(c=>{state.boostCodeMap[c.code.toUpperCase()]=c.type;});
-  // 실수로 탭/창을 닫았다가 다시 들어온 경우 이전 진행상황 복원 — 새로고침이면 초기화
-  if(isPageRefresh()){clearGameState();} else {loadGameState();}
+  // 새로고침/탭 종료를 구분하지 않고, 유효한 V2 저장본이 있으면 사용자가 직접 선택한다.
+  pendingResumeData=readSavedGame();
   updateRoundTitle();
   renderObjList(); renderHistList(); updateCaptureUI();
   updateSwapLinesButton();
@@ -3108,9 +3703,9 @@ async function boot(){
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('app').style.display='flex';
   updateShutterState();
-  setTimeout(()=>{ try{ showToast('AI 캡처 '+getMaxCaptures()+'회로 시작합니다','unlock1'); }catch(e){} }, 400);
-  // 라운드 시작 시 "어떤 고객을 계산하시겠어요?" 고객카드 뽑기 팝업
-  setTimeout(()=>{ startRoundCustomerDraw(state.round); }, 900);
+  attachRecoveryLifecycleHandlers();
+  bootReady=true;
+  if(coverStartRequested)closeCoverScreen();
 }
 function setLoadMsg(m){document.getElementById('loadingMsg').textContent=m;}
 
@@ -3123,6 +3718,12 @@ function switchTab(t){
 
 // ── 카메라 ──
 function isMobileUA(){return /iphone|ipad|ipod|android/i.test(navigator.userAgent);}
+let cameraConnectEpoch=0;
+let cameraConnectInFlight=false;
+function cancelPendingCameraConnection(){
+  cameraConnectEpoch++;
+  cameraConnectInFlight=false;
+}
 
 // ── 후레쉬(손전등) ──
 function updateTorchButton(){
@@ -3153,6 +3754,20 @@ async function toggleTorch(){
 async function startCamera(){
   const camErrEl=document.getElementById('camError');
   camErrEl.classList.remove('show');
+  const cameraBtn=document.getElementById('btnCamera');
+  if(cameraConnectInFlight)return;
+  if(state.phase==='analyzing'){
+    showToast('촬영/분석이 끝난 뒤 카메라를 재연결해주세요','error');
+    return;
+  }
+  if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+    showToast('완료된 고객을 정리하고 있습니다. 잠시 후 다시 눌러주세요','unlock1');
+    return;
+  }
+  const cameraToken=++cameraConnectEpoch;
+  cameraConnectInFlight=true;
+  cameraBtn.disabled=true;
+  cameraBtn.textContent='카메라 연결 중...';
 
   // HTTPS/localhost가 아니면 대부분의 브라우저에서 getUserMedia 자체가 막히거나
   // navigator.mediaDevices가 존재하지 않음 → 시도 전에 원인을 바로 안내
@@ -3163,13 +3778,58 @@ async function startCamera(){
       : 'Chrome 태블릿이라면 주소창에 chrome://flags 를 입력해 "Insecure origins treated as secure"에 이 주소를 등록하고 재시작하면 우회할 수 있습니다. (근본 해결은 HTTPS 배포입니다.)';
     camErrEl.innerHTML='⚠ 이 주소(HTTP)에서는 카메라 권한을 요청할 수 없습니다.<br/>'+tip;
     camErrEl.classList.add('show');
+    if(cameraToken===cameraConnectEpoch){
+      cameraConnectInFlight=false;
+      cameraBtn.disabled=false;
+      cameraBtn.textContent='카메라 시작';
+    }
     return;
   }
 
+  let candidateStream=null;
   try{
-    const stream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:'environment',width:{ideal:1280},height:{ideal:960}},audio:false
+    // 재연결 시 기존 트랙을 먼저 정리해 카메라 세션과 디버그 타이머가 중복되지 않게 한다.
+    const previousStream=state.cameraStream;
+    state.cameraStream=null;
+    if(previousStream)previousStream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});
+    if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
+    state.liveLevel=0;
+    if(state.phase!=='done')state.phase='idle';
+    updateShutterState();
+    // 권한 창이나 드라이버가 응답하지 않아도 다시 연결할 수 있게 대기를 제한한다.
+    // getUserMedia 자체는 취소할 수 없으므로, 시간 초과 뒤 도착한 스트림은 즉시 정리한다.
+    candidateStream=await new Promise((resolve,reject)=>{
+      let waiting=true;
+      const connectionTimer=setTimeout(()=>{
+        if(!waiting)return;
+        waiting=false;
+        const timeoutError=new Error('camera-connect-timeout');
+        timeoutError.name='CameraConnectionTimeoutError';
+        reject(timeoutError);
+      },15000);
+      Promise.resolve().then(()=>navigator.mediaDevices.getUserMedia({
+        video:{facingMode:'environment',width:{ideal:1280},height:{ideal:960}},audio:false
+      })).then(stream=>{
+        if(!waiting || cameraToken!==cameraConnectEpoch){
+          stream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});
+          if(waiting){waiting=false;clearTimeout(connectionTimer);resolve(stream);}
+          return;
+        }
+        waiting=false;
+        clearTimeout(connectionTimer);
+        resolve(stream);
+      },error=>{
+        if(!waiting)return;
+        waiting=false;
+        clearTimeout(connectionTimer);
+        reject(error);
+      });
     });
+    if(cameraToken!==cameraConnectEpoch){
+      candidateStream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});
+      return;
+    }
+    const stream=candidateStream;
     try{
       const track=stream.getVideoTracks()[0];
       const cap=track.getCapabilities();
@@ -3212,29 +3872,69 @@ async function startCamera(){
       state.torchSupported=false;
       state.torchOn=false;
     }
-    state.cameraStream=stream;
-    updateTorchButton();
+    if(cameraToken!==cameraConnectEpoch){
+      stream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});
+      if(!isCameraStreamLive()){state.torchSupported=false;state.torchOn=false;updateTorchButton();}
+      return;
+    }
     const v=document.getElementById('cameraVideo');
     v.srcObject=stream;
-    await new Promise(res=>{v.onloadedmetadata=res;});
+    await Promise.race([
+      new Promise(res=>{v.onloadedmetadata=()=>res();}),
+      sleep(3000)
+    ]);
+    if(cameraToken!==cameraConnectEpoch){
+      if(v.srcObject===stream)v.srcObject=null;
+      stream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});
+      if(!isCameraStreamLive()){state.torchSupported=false;state.torchOn=false;updateTorchButton();}
+      return;
+    }
+    const primaryTrack=stream.getVideoTracks()[0];
+    if(!primaryTrack || primaryTrack.readyState!=='live')throw new Error('camera-stream-ended');
+    state.cameraStream=stream;
+    primaryTrack.addEventListener('ended',()=>{
+      if(state.cameraStream!==stream)return;
+      state.cameraStream=null;
+      state.torchOn=false;
+      updateTorchButton();
+      if(activeCaptureTxn){recoverCaptureFailure(activeCaptureTxn,'camera-track-ended');return;}
+      if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
+      if(state.phase!=='done')state.phase='idle';
+      cameraBtn.disabled=false;
+      cameraBtn.textContent='카메라 다시 연결';
+      document.getElementById('topStatus').textContent='STANDBY';
+      document.getElementById('camHint').textContent='● 카메라 연결이 끊어졌습니다. 다시 연결해주세요.';
+      updateShutterState();
+    },{once:true});
+    updateTorchButton();
+    v.play().catch(e=>console.log('[CAM] play failed:',e.message));
+    resetCaptureVisuals();
     v.style.display='block';
+    document.getElementById('frozenCanvas').style.display='none';
     document.getElementById('camPlaceholder').style.display='none';
     document.getElementById('stripeGuide').classList.add('show');   // 숨김 상태로 활성화 (인식용)
     document.getElementById('productGuide').classList.add('show');  // 상품 인식 존 표시
     document.getElementById('rgbDebug').classList.add('show');
-    document.getElementById('btnCamera').disabled=true;
+    cameraConnectInFlight=false;
+    cameraBtn.disabled=false;
+    cameraBtn.textContent='카메라 재연결';
     document.getElementById('topStatus').textContent='CAMERA ON';
     state.phase='camera';
-    updateShutterState();
     startLiveDebug();
+    document.getElementById('camHint').textContent='● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.';
+    updateShutterState();
     // 2026-08-15b: OCR 3중 교차검증에 쓸 Tesseract.js를 카메라 시작 시점에 백그라운드로
     // 미리 불러온다(await 안 함 — 카메라 시작을 지연시키지 않음). 실제 촬영에서 OCR이
     // 필요한 시점(바코드/이미지 불일치, 또는 바코드 완전 실패)이 왔을 때 이미 로딩이
     // 끝나 있을 가능성을 높이기 위함 — 그래도 안 끝나 있으면 computeOcrGuess가 조용히
     // null을 반환하고 기존 로직만으로 판정하므로 안전하다.
     ocrpEnsureEngineLoaded();
-    document.getElementById('camHint').textContent='● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.';
   }catch(e){
+    const failedVideo=document.getElementById('cameraVideo');
+    if(candidateStream && failedVideo.srcObject===candidateStream)failedVideo.srcObject=null;
+    if(candidateStream)candidateStream.getTracks().forEach(track=>{try{track.stop();}catch(stopError){}});
+    if(cameraToken!==cameraConnectEpoch)return;
+    cameraConnectInFlight=false;
     let msg='카메라 접근 실패.';
     if(e.name==='NotAllowedError'){
       const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -3243,9 +3943,18 @@ async function startCamera(){
         : '주소창의 자물쇠(또는 정보) 아이콘 → 권한 → 카메라 → 허용으로 바꾼 뒤, 새로고침 해주세요.');
     }
     if(e.name==='NotFoundError')msg='카메라를 찾을 수 없습니다. 태블릿에 카메라가 있는지, 다른 앱이 카메라를 사용 중인지 확인해주세요.';
+    if(e.name==='CameraConnectionTimeoutError')msg='카메라 연결 응답이 늦어져 연결을 중단했습니다. 권한 창이 열려 있다면 확인한 뒤 「카메라 다시 연결」을 눌러주세요.';
     camErrEl.innerHTML=msg;
     camErrEl.classList.add('show');
     state.torchSupported=false;state.torchOn=false;updateTorchButton();
+    state.cameraStream=null;
+    state.liveLevel=0;
+    if(state.phase!=='done')state.phase='idle';
+    cameraBtn.disabled=false;
+    cameraBtn.textContent='카메라 다시 연결';
+    document.getElementById('topStatus').textContent='STANDBY';
+    document.getElementById('camHint').textContent='● 카메라 연결에 실패했습니다. 다시 연결해주세요.';
+    updateShutterState();
   }
 }
 
@@ -3320,6 +4029,7 @@ function showFocusReticle(x,y){
 let debugTimer=null;
 let noRecognitionSince=-1;  // 인식 실패 시작 시각 (ms); -1 = 현재 인식 중
 function startLiveDebug(){
+  if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
   patternBuffer.length=0;   // 라이브 시작/재시작 시 버퍼 초기화
   noRecognitionSince=-1;
   // 2026-08-15 추가: 배지 표시 안정화(hysteresis). 프레임 하나하나는 손떨림/조명
@@ -3453,10 +4163,13 @@ function startLiveDebug(){
       }
     }
     const camHintEl=document.getElementById('camHint');
-    // rem===0(캡처 소진)일 때는 "셔터를 눌러 촬영하세요"가 실제로 불가능한 안내가 되므로
-    // 그 경우엔 인식완료여도 프레이밍 안내로 덮어쓰지 않고 updateShutterState()가 이미
-    // 설정해둔 "캡처 소진" 문구를 그대로 둔다.
-    const shootable=state.practiceMode || getRemainingCaptures()>0;
+    // 정산 잠금·고객 배치·대상 선택·횟수 소진 안내는 프레이밍보다 우선한다.
+    // 셔터를 사용할 수 없는 상태에서 "셔터를 누르세요"로 덮어쓰지 않는다.
+    const framingAllowed=state.practiceMode || (!state.shutterLockedThisRound &&
+      state.roundSetupComplete && roundAdvanceState==='idle' &&
+      !!state.checkoutTarget && getRemainingCaptures()>0);
+    if(!framingAllowed)return;
+    const shootable=state.practiceMode || !document.getElementById('btnShutter').disabled;
     if(framingHint){
       camHintEl.textContent=framingHint;
     } else if(showOk && shootable){
@@ -3494,7 +4207,10 @@ function updateCaptureUI(){
   // 2026-08-18 추가(세린님 지시): 5라운드(마지막 라운드)는 넘어갈 다음 라운드가 없으므로
   // "다음 라운드" 버튼을 숨긴다 — "정산" 버튼은 그대로 남아 최종 결산 확인 용도로 쓰인다.
   const nextBtn=document.getElementById('btnNextRound');
-  if(nextBtn) nextBtn.style.display = state.round>=5 ? 'none' : '';
+  if(nextBtn){
+    nextBtn.style.display = state.round>=5 ? 'none' : '';
+  }
+  updateRoundAdvanceControls();
   const show=Math.min(max,6);
   dots.innerHTML='';
   for(let i=0;i<show;i++){
@@ -3531,7 +4247,9 @@ function updateShutterState(){
     btn.disabled=true;
     btn.classList.remove('blurry');
     if(state.phase==='camera'){
-      hint.textContent='● 이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다.';
+      hint.textContent=state.shutterLockReason==='settlement'
+        ? '● 정산이 완료되어 이번 라운드 촬영이 잠겼습니다.'
+        : '● 이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다.';
     }
     return;
   }
@@ -3541,16 +4259,20 @@ function updateShutterState(){
   // 막는다. (선택 안 된 상태로 촬영하면 구버전 실측 바코드/이미지 인식 파이프라인이 실행돼
   // "바코드/이미지 판정 불일치" 같은 무의미한 메시지가 뜨는 부작용도 함께 막힌다.)
   const hasTarget=!!state.checkoutTarget;
+  const roundReady=state.roundSetupComplete && roundAdvanceState==='idle';
   // 2026-08-16m 추가: 세린님 지시 — 카드가 카메라에 최소 "인식 중"(liveLevel>=1) 상태로
   // 잡혀 있어야 촬영이 가능하게 한다. 카드 없이 실수로 눌러도 그냥 계산돼버리던 문제 해결.
   const hasCard=(state.liveLevel||0)>=1;
   // 게이트 OFF: sharpness 조건 무시 (자동초점·가이드 박스로 충분히 보정됨)
-  const canShoot=isCamera && rem>0 && hasTarget && hasCard;
+  const canShoot=isCamera && rem>0 && hasTarget && hasCard && roundReady;
   btn.disabled=!canShoot;
   // 게이트 OFF 상태에서는 blurry 표시도 사용 안 함
   btn.classList.remove('blurry');
   if(isCamera){
-    if(!hasTarget){
+    if(!roundReady){
+      hint.textContent=roundAdvanceState==='committing'
+        ? '● 다음 라운드를 준비하고 있습니다.' : '● 이번 라운드 고객 배치를 먼저 완료해주세요.';
+    } else if(!hasTarget){
       hint.textContent='● 먼저 계산할 고객을 선택하세요.';
     } else if(rem===0){
       hint.textContent='● 이번 라운드 AI 캡처 소진 — 다음 라운드 버튼 누르세요';
@@ -3560,6 +4282,207 @@ function updateShutterState(){
       hint.textContent='● 카드 전체가 가이드 박스에 들어오도록 맞춰주세요.';
     }
   }
+}
+
+// 라운드 전환은 확인 후 한 번만 커밋한다. 빠른 중복 터치와 이전 라운드의 지연 콜백이
+// 다음 라운드 상태를 덮어쓰지 않도록 전환 토큰과 타이머를 함께 관리한다.
+let roundAdvanceState='idle'; // idle | confirming | committing
+let roundAdvanceToken=0;
+let roundAdvanceTimers=[];
+function clearRoundAdvanceTimers(){
+  roundAdvanceTimers.forEach(id=>clearTimeout(id));
+  roundAdvanceTimers=[];
+}
+function scheduleRoundAdvanceTask(token,delay,fn){
+  const id=setTimeout(()=>{
+    roundAdvanceTimers=roundAdvanceTimers.filter(v=>v!==id);
+    if(token!==roundAdvanceToken)return;
+    fn();
+  },delay);
+  roundAdvanceTimers.push(id);
+  return id;
+}
+function canAdvanceAfterSettlement(){
+  return !!state.settlementVisitedThisRound ||
+    (!!state.returnedToPreviousRound && state.staffFinishedThisRound.length>0);
+}
+function showSettlementRequiredPopup(){
+  clearAllToasts();
+  document.getElementById('settlementRequiredOverlay').style.display='flex';
+}
+function closeSettlementRequiredPopup(){
+  document.getElementById('settlementRequiredOverlay').style.display='none';
+}
+function updateRoundAdvanceControls(){
+  const btn=document.getElementById('btnNextRound');
+  if(btn){
+    // 정산 전에도 안내 팝업을 열 수 있어야 하므로 클릭 자체는 허용한다.
+    btn.disabled=saveFailureActive || previousRoundConfirmOpen || !state.roundSetupComplete || state.phase==='analyzing' || roundAdvanceState!=='idle' ||
+      !!(state.checkoutTarget && state.checkoutLastOutcome==='complete');
+    btn.classList.toggle('needs-settlement',!canAdvanceAfterSettlement());
+    btn.title=canAdvanceAfterSettlement()?'다음 라운드로 이동':'정산 안내 보기';
+  }
+  const settle=document.getElementById('btnSettleRound');
+  if(settle)settle.disabled=saveFailureActive || previousRoundConfirmOpen || !state.roundSetupComplete || state.phase==='analyzing' || roundAdvanceState!=='idle' ||
+    !!(state.checkoutTarget && state.checkoutLastOutcome==='complete');
+  updatePreviousRoundControls();
+}
+function setRoundAdvanceOverlayMode(mode){
+  const overlay=document.getElementById('roundAdvanceConfirmOverlay');
+  if(!overlay)return;
+  const title=overlay.querySelector('.tp-title');
+  const row=overlay.querySelector('.tp-btn-row');
+  if(mode==='committing'){
+    if(title)title.textContent='⏳ 다음 라운드 준비 중';
+    document.getElementById('roundAdvanceConfirmMsg').textContent='라운드 정보를 안전하게 저장하고 있습니다. 잠시만 기다려주세요.';
+    if(row)row.style.display='none';
+    overlay.style.display='flex';
+  }else{
+    if(title)title.textContent='⚠ 다음 라운드 확인';
+    if(row)row.style.display='flex';
+    if(mode==='hidden')overlay.style.display='none';
+  }
+}
+function resetRoundTransitionState(){
+  roundAdvanceToken++;
+  clearRoundAdvanceTimers();
+  roundAdvanceState='idle';
+  setRoundAdvanceOverlayMode('hidden');
+  updateRoundAdvanceControls();
+}
+
+// 이전 라운드 재도전이 아니라, 새 라운드의 행동을 시작하기 전 전환을 한 번 취소한다.
+// 체크포인트에는 과거 체크포인트를 넣지 않아 연속으로 여러 라운드를 되돌릴 수 없다.
+function validatePreviousRoundRecovery(value){
+  if(!value || value.sessionId!==state.sessionId || value.toRound!==state.round ||
+     value.fromRound!==state.round-1 || value.fromRound<1 || value.toRound>5)return null;
+  const saved=value.snapshot;
+  if(!saved?.session?.active || saved.session.id!==state.sessionId ||
+     saved.game?.round!==value.fromRound || saved.game.pendingCapture ||
+     saved.game.phase==='analyzing' || !saved.game.roundSetupComplete)return null;
+  const result=clonePlain(value,null);
+  if(!result)return null;
+  result.locked=value.locked!==false;
+  // 구 임시본의 단순 선택 잠금은 실제 진행 변경이 없음을 확인한 경우에만 이관한다.
+  if(result.locked && result.reason==='새 라운드 고객카드를 선택했습니다. 선택을 취소해도 복귀 잠금은 유지됩니다.' &&
+     restoredFlowState?.customerPicker?.mode==='roundDraw' && !restoredFlowState?.lineAssign?.mode &&
+     !state.roundSetupComplete && !state.pendingCapture && !state.checkoutTarget &&
+     !state.checkoutLastOutcome && !state.shutterLockedThisRound && !state.captureUsed &&
+     !state.roundTotal && !state.roundCount && !state.staffFinishedThisRound.length &&
+     Object.keys(state.customerMoveCount).length===0){
+    const current=buildGameSnapshot(false).game;
+    const before=saved.game;
+    const unchanged=['codeCount','usedCodes','boostHistory','captureBonus','adActive',
+      'cumulativeGrossTotal','trustPenaltyCount','customerProgress','myCustomerCards']
+      .every(key=>JSON.stringify(current[key])===JSON.stringify(before[key]));
+    const expectedStaff=clonePlain(before.staffLineCards,[]);
+    if(state.round===3 && !expectedStaff.some(c=>c.code===BIG_FAMILY_CODE))expectedStaff.push({code:BIG_FAMILY_CODE});
+    if(unchanged && JSON.stringify(current.staffLineCards)===JSON.stringify(expectedStaff)){
+      result.locked=false;result.reason='';
+    }
+  }
+  result.snapshot.previousRoundRecovery=null;
+  return result;
+}
+function previousRoundUnavailableReason(){
+  if(state.round<=1)return '1라운드에는 이전 라운드가 없습니다.';
+  const recovery=previousRoundRecovery;
+  if(!recovery || recovery.sessionId!==state.sessionId || recovery.toRound!==state.round)
+    return '이전 라운드 복구 기록이 없습니다. 이 버전에서 다음 라운드로 이동하면 기록됩니다.';
+  if(recovery.locked)return '진행이 확정되어 이전 라운드로 돌아갈 수 없습니다.';
+  if(saveFailureActive)return '현재 진행을 먼저 저장해주세요.';
+  if(roundAdvanceState!=='idle')return '라운드 전환이 끝난 뒤 눌러주세요.';
+  if(state.phase==='analyzing' || state.pendingCapture ||
+     (state.checkoutTarget && state.checkoutLastOutcome==='complete'))return '촬영 결과를 처리하고 있습니다.';
+  if((state.captureUsed||0)>0 || state.shutterLockedThisRound ||
+     state.staffFinishedThisRound.length>0 ||
+     (cpMode==='roundDraw' && cpSelected.single.size+cpSelected.multi.size>0))
+    return '이미 새 라운드의 선택 또는 계산을 시작했습니다.';
+  return '';
+}
+function updatePreviousRoundControls(){
+  const reason=previousRoundUnavailableReason();
+  ['btnPreviousRound','customerPickerPreviousRound','lineAssignPreviousRound'].forEach(id=>{
+    const btn=document.getElementById(id);
+    if(!btn)return;
+    btn.disabled=!!reason || previousRoundConfirmOpen;
+    btn.title=reason||'다음 라운드를 누르기 직전의 상태로 복구합니다.';
+    if(id!=='btnPreviousRound')btn.style.display=state.round>1?'':'none';
+  });
+  const hint=document.getElementById('previousRoundHint');
+  if(hint){hint.textContent='';hint.style.display='none';}
+  const pickerHint=document.getElementById('customerPickerRecoveryHint');
+  if(pickerHint){
+    pickerHint.style.display='none';
+    pickerHint.textContent='';
+  }
+}
+function lockPreviousRoundRecovery(reason){
+  if(!previousRoundRecovery || previousRoundRecovery.toRound!==state.round || previousRoundRecovery.locked)return;
+  previousRoundRecovery.locked=true;
+  previousRoundRecovery.reason=reason;
+  cancelPreviousRound();
+  // 취소·RESET·새로고침 뒤에도 한번 시작한 새 라운드의 잠금은 유지한다.
+  saveGameState();
+}
+function onClickPreviousRound(){
+  const reason=previousRoundUnavailableReason();
+  if(reason){showToast(reason,'error');return;}
+  const old=previousRoundRecovery.snapshot.game;
+  document.getElementById('previousRoundConfirmMsg').textContent=
+    `${old.round}라운드에서 ‘다음 라운드’를 누르기 직전으로 돌아갑니다.`;
+  document.getElementById('previousRoundPhysicalCheck').checked=false;
+  document.getElementById('confirmPreviousRoundButton').disabled=true;
+  previousRoundConfirmOpen=true;
+  document.getElementById('previousRoundConfirmOverlay').style.display='flex';
+  updateRoundAdvanceControls();
+}
+function updatePreviousRoundConfirmation(){
+  document.getElementById('confirmPreviousRoundButton').disabled=
+    !previousRoundConfirmOpen || !!previousRoundUnavailableReason() ||
+    !document.getElementById('previousRoundPhysicalCheck').checked;
+}
+function cancelPreviousRound(){
+  previousRoundConfirmOpen=false;
+  const overlay=document.getElementById('previousRoundConfirmOverlay');
+  if(overlay)overlay.style.display='none';
+  updateRoundAdvanceControls();
+}
+function clearRoundRecoveryTransientState(){
+  cpMode=null;cpQuota=null;cpSelected={single:new Set(),multi:new Set()};cpActiveTab='single';
+  laMode=null;laStagingCodes=[];laDrawOrigin=null;laDrawBatchCodes=[];laRoundStartPending=false;
+  pendingFinishCalcCode=null;pendingResumeData=null;restoredFlowState=null;
+  ['buyPasswordRow','buyUnlockedRow','fullResetConfirmOverlay'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+}
+function confirmPreviousRound(){
+  if(!previousRoundConfirmOpen || previousRoundUnavailableReason() ||
+     !document.getElementById('previousRoundPhysicalCheck').checked)return;
+  const checkpoint=clonePlain(previousRoundRecovery.snapshot,null);
+  if(!checkpoint)return;
+  // 현재 저장이 불가능하면 이전 상태를 적용하지 않고 재시도 안내를 먼저 표시한다.
+  if(!saveGameState())return;
+  previousRoundConfirmOpen=false;
+  cancelLaDrag();
+  invalidateCaptureCallbacks('previous-round');
+  cancelPendingCameraConnection();
+  resetRoundTransitionState();
+  hideTransientOverlays();
+  clearRoundRecoveryTransientState();
+  checkpoint.previousRoundRecovery=null;
+  if(!loadGameState(checkpoint)){
+    showToast('이전 라운드를 복원하지 못했습니다. 새로고침 후 저장된 게임을 이어주세요.','error');
+    return;
+  }
+  previousRoundRecovery=null;
+  // 복귀 후에는 직원 완료 기록이 남아 있는 경우에만 정산 재진입을 생략한다.
+  state.returnedToPreviousRound=true;
+  state.settlementVisitedThisRound=false;
+  renderRestoredGameState();
+  restoreSavedFlow();
+  if(saveGameState())showToast(`${state.round}라운드 전환 직전 상태로 복구했습니다. 촬영 횟수와 결과는 그대로입니다.`,'unlock1');
+  updateRoundAdvanceControls();
 }
 
 // 2026-08-17 재설계(세린님 지시): "다음 라운드" 클릭 → 곧바로 라운드를 넘기지 않고
@@ -3601,16 +4524,39 @@ function closeFinalSettlePopup(){
 // (openLineAssign 내부의 분석 중 가드가 있어, 촬영/분석 중이면 에러 토스트만 뜨고 열리지 않는다.)
 // 5라운드에서는 "완료"를 누르면(confirmLineAssign 참고) 일반 정산 팝업 대신 "최종 결산" 팝업이 뜬다.
 function nextRound(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  if(roundAdvanceState!=='idle')return;
+  if(!state.roundSetupComplete){
+    showToast('이번 라운드의 고객카드 배치를 먼저 완료해주세요','error');
+    return;
+  }
+  if(state.phase==='analyzing'){
+    showToast('촬영/분석 중에는 정산할 수 없어요','error');
+    return;
+  }
+  if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+    showToast('완료된 고객을 정리하고 있습니다. 잠시 후 정산해주세요','unlock1');
+    return;
+  }
   laRoundStartPending=true;
-  openLineAssign('swap', []);
+  const opened=openLineAssign('swap', []);
+  if(!opened){
+    laRoundStartPending=false;
+    return;
+  }
   if(laMode==='swap'){
+    lockPreviousRoundRecovery('정산을 시작했습니다.');
     // 2026-08-19 추가(세린님 지시): "정산" 버튼을 누르면 이번 라운드 카메라(셔터)와 RESET
     // 버튼을 비활성화한다 — 다음 라운드로 넘어가야(advanceToNextRound) 다시 활성화된다.
     // ("다음 라운드" 버튼 자체는 계속 눌러야 하므로 건드리지 않는다.)
     // (분석 중이라 openLineAssign이 막혀 화면이 안 열렸으면 잠그지 않는다.)
     state.shutterLockedThisRound=true;
+    state.shutterLockReason='settlement';
+    state.settlementVisitedThisRound=true;
+    updateRoundAdvanceControls();
     updateShutterState();
     document.getElementById('btnReset').disabled=true;
+    saveGameState();
   }
   document.getElementById('laHint').textContent = state.round>=5
     ? '🏁 마지막 라운드 — 고객 현황을 정리한 뒤 완료를 눌러주세요.'
@@ -3621,13 +4567,68 @@ function nextRound(){
 // 넘어갈 다음 라운드가 없으므로 버튼 자체를 숨긴다(updateCaptureUI 참고) — 혹시 모를 경우를
 // 대비해 여기서도 한 번 더 막는다.
 function onClickAdvanceRound(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   if(state.phase==='analyzing'){ showToast('촬영/분석 중에는 라운드를 넘길 수 없어요','error'); return; }
+  if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+    showToast('완료된 고객을 정리하고 있습니다. 잠시 후 다시 눌러주세요','unlock1');
+    return;
+  }
   if(state.round>=5) return;
-  advanceToNextRound();
+  if(roundAdvanceState!=='idle')return;
+  if(!state.roundSetupComplete){
+    showToast('이번 라운드의 고객카드 배치를 먼저 완료해주세요','error');
+    return;
+  }
+  if(!canAdvanceAfterSettlement()){showSettlementRequiredPopup();return;}
+  roundAdvanceState='confirming';
+  document.getElementById('roundAdvanceConfirmMsg').textContent=
+    `${state.round}라운드를 마치고 ${state.round+1}라운드로 이동할까요?`;
+  setRoundAdvanceOverlayMode('confirming');
+  document.getElementById('roundAdvanceConfirmOverlay').style.display='flex';
+  updateRoundAdvanceControls();
 }
-function advanceToNextRound(){
+function cancelRoundAdvance(){
+  if(roundAdvanceState!=='confirming')return;
+  roundAdvanceState='idle';
+  setRoundAdvanceOverlayMode('hidden');
+  updateRoundAdvanceControls();
+}
+function confirmRoundAdvance(){
+  if(roundAdvanceState!=='confirming')return;
+  if(!canAdvanceAfterSettlement() || saveFailureActive || previousRoundConfirmOpen || !state.roundSetupComplete || state.phase==='analyzing')return;
+  const checkpoint=buildGameSnapshot(false);
+  previousRoundRecovery={
+    sessionId:state.sessionId,fromRound:state.round,toRound:state.round+1,
+    locked:false,reason:'',snapshot:checkpoint
+  };
+  if(!saveGameState())return;
+  const expectedRound=state.round;
+  roundAdvanceState='committing';
+  setRoundAdvanceOverlayMode('committing');
+  clearRoundAdvanceTimers();
+  const token=++roundAdvanceToken;
+  updateRoundAdvanceControls();
+  if(!advanceToNextRound(expectedRound,token))resetRoundTransitionState();
+}
+function finishRoundAdvance(token,task){
+  if(token!==roundAdvanceToken || roundAdvanceState!=='committing')return;
+  roundAdvanceState='idle';
+  setRoundAdvanceOverlayMode('hidden');
+  updateRoundAdvanceControls();
+  task();
+  saveGameState();
+}
+function advanceToNextRound(expectedRound,token){
+  if(!canAdvanceAfterSettlement() || roundAdvanceState!=='committing' || token!==roundAdvanceToken || state.round!==expectedRound || state.round>=5){
+    return false;
+  }
+  cancelLaDrag();
+  invalidateCaptureCallbacks('round-advance');
+  clearAllToasts();
   state.round++;
   state.captureUsed=0;
+  state.checkoutTarget=null;
+  state.checkoutLastOutcome=null;
   state.objects.forEach(o=>{state.results[o.key]=null;});
   state.voidedKeys=new Set();
   state.roundTotal=0;
@@ -3640,12 +4641,18 @@ function advanceToNextRound(){
   // 2026-08-18 추가(세린님 지시): 1라운드 데이터카드 4장 초과 확인으로 잠겼던 셔터는 다음
   // 라운드 시작 시 자동 해제된다.
   state.shutterLockedThisRound=false;
+  state.shutterLockReason=null;
+  state.settlementVisitedThisRound=false;
+  state.returnedToPreviousRound=false;
   state.finishCalcPromptShownThisRound=false;
+  state.roundSetupComplete=false;
+  state.pendingCapture=null;
   // 2026-08-16i 추가: 2→3라운드 전환 시 "대가족 카드" 등장 — 직원 계산대 줄에만 배치되며
   // 4라운드까지는 결제 불가, 5라운드 시작 시부터 결제 가능(₩10,600 고정, 완료 시 자동 반영).
   // 세린님 확인: 직원 줄이 이미 4장 꽉 차 있어도 예외 없이 그대로 추가되며(일시적으로 5장),
   // 기존 "고객 줄 현황" 초과 검사에 걸려 자리를 비울 때까지 화면이 닫히지 않는다.
-  if(state.round===3){
+  if(state.round===3 && !state.staffLineCards.some(c=>c.code===BIG_FAMILY_CODE)){
+    state.bigFamilyIntroAcknowledged=false;
     state.staffLineCards.push({code:BIG_FAMILY_CODE});
     // 2026-08-17 변경(세린님 지시): 이 등장 안내는 토스트가 아니라 "확인" 버튼이 있는
     // 팝업으로 띄운다 — 아래쪽에서 "N라운드 시작!" 토스트가 사라진 뒤 이 팝업을 열고,
@@ -3655,9 +4662,9 @@ function advanceToNextRound(){
   saveGameState();
   // 강화 A (광고) 영구 효과: R2~R4 ③전략세우기마다 +1장 안내 (R5는 ③ 없음)
   if(state.adActive && state.adActive>0 && state.round<=4){
-    setTimeout(()=>{
+    scheduleRoundAdvanceTask(token,400,()=>{
       showToast(`📢 광고 효과!\n이번 라운드 [3] 전략세우기 단계에서\n선생님께 고객카드 ${state.adActive}장을 받으세요.`,'boost-A');
-    }, 400);
+    });
   }
   if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
   if(state.cameraStream){
@@ -3682,30 +4689,223 @@ function advanceToNextRound(){
   document.getElementById('topStatus').textContent=state.cameraStream?'CAMERA ON':'STANDBY';
   document.getElementById('vfFill').style.width='0%';
   setBadge('idle');renderObjList();renderScore();updateCaptureUI();
-  document.getElementById('camHint').textContent=state.cameraStream
-    ?'● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.'
-    :'카메라 시작 버튼을 눌러주세요.';
+  if(!state.cameraStream)document.getElementById('camHint').textContent='카메라 시작 버튼을 눌러주세요.';
+  else updateShutterState();
   // 2026-08-17 변경: "N라운드 시작!"과 "AI 캡처 N회 가능" 안내를 하나로 합쳤고,
   // 이 토스트가 완전히 사라질 때까지(3200ms 표시 + 300ms 페이드 = 3500ms) 기다린 뒤에야
   // 고객카드 뽑기 화면을 연다 — 팝업과 고객 선택 화면이 겹치지 않도록.
+  // 전환 잠금은 유지하되 준비 중 창은 닫은 뒤 시작 알림을 표시한다.
+  setRoundAdvanceOverlayMode('hidden');
   showToast(`🚩 ${state.round}라운드 시작! AI 캡처 ${getMaxCaptures()}회 가능`,'unlock1');
   if(state.round===3){
     // 3라운드는 "대가족 카드 등장" 확인 팝업을 거쳐야 고객카드 뽑기로 이어진다.
-    setTimeout(()=>{ showBigFamilyAppearPopup(); }, 3500);
+    scheduleRoundAdvanceTask(token,3500,()=>finishRoundAdvance(token,showBigFamilyAppearPopup));
   } else {
-    setTimeout(()=>{ startRoundCustomerDraw(state.round); }, 3500);
+    scheduleRoundAdvanceTask(token,3500,()=>finishRoundAdvance(token,()=>startRoundCustomerDraw(state.round)));
   }
+  return true;
 }
 function showBigFamilyAppearPopup(){
   document.getElementById('bigFamilyAppearOverlay').style.display='flex';
+  saveGameState();
 }
 function confirmBigFamilyAppearPopup(){
   document.getElementById('bigFamilyAppearOverlay').style.display='none';
+  state.bigFamilyIntroAcknowledged=true;
+  saveGameState();
   startRoundCustomerDraw(state.round);
+}
+
+// ── 촬영 트랜잭션/자동 복구 ──
+// 결과 확정 전의 예외·카메라 중단만 촬영 횟수를 반환한다. 0%/60% 판정 실패처럼
+// 정상적으로 확정된 결과는 재추첨하거나 반환하지 않는다.
+let captureEpoch=0;
+let activeCaptureTxn=null;
+let captureWatchdogTimer=null;
+let checkoutAutoFinishTimer=null;
+class CaptureCancelledError extends Error{
+  constructor(){super('capture-cancelled');this.name='CaptureCancelledError';}
+}
+function isCameraStreamLive(){
+  const tracks=state.cameraStream?.getVideoTracks?.()||[];
+  return tracks.some(track=>track.readyState==='live');
+}
+function captureBeforeSnapshot(){
+  return {
+    results:{...state.results},
+    voidedKeys:[...state.voidedKeys],
+    checkoutLastOutcome:state.checkoutLastOutcome,
+    roundTotal:state.roundTotal||0,
+    roundCount:state.roundCount||0,
+    cumulativeGrossTotal:state.cumulativeGrossTotal||0,
+    customerProgress:clonePlain(state.customerProgress,{})
+  };
+}
+function pendingCaptureSnapshot(tx){
+  return {
+    id:tx.id,
+    kind:tx.kind,
+    sessionId:tx.sessionId,
+    round:tx.round,
+    target:tx.target,
+    status:tx.status,
+    startedAt:tx.startedAt,
+    captureUsedBefore:tx.captureUsedBefore,
+    before:clonePlain(tx.before,{})
+  };
+}
+function clearCaptureWatchdog(){
+  if(captureWatchdogTimer){clearInterval(captureWatchdogTimer);captureWatchdogTimer=null;}
+}
+function beginCaptureTxn(kind){
+  if(activeCaptureTxn)throw new Error('capture-already-running');
+  if(typeof lockPreviousRoundRecovery==='function')lockPreviousRoundRecovery('촬영을 시작했습니다.');
+  const tx={
+    id:`capture-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    epoch:++captureEpoch,
+    kind,
+    sessionId:state.sessionId,
+    round:state.round,
+    target:state.checkoutTarget||null,
+    status:'reserved',
+    startedAt:Date.now(),
+    heartbeatAt:Date.now(),
+    captureUsedBefore:state.captureUsed||0,
+    before:captureBeforeSnapshot()
+  };
+  activeCaptureTxn=tx;
+  state.phase='analyzing';
+  state.captureUsed=tx.captureUsedBefore+1;
+  state.pendingCapture=pendingCaptureSnapshot(tx);
+  saveGameState();
+  clearCaptureWatchdog();
+  captureWatchdogTimer=setInterval(checkActiveCaptureStall,2000);
+  return tx;
+}
+function assertActiveCapture(tx){
+  if(!tx || activeCaptureTxn!==tx || tx.epoch!==captureEpoch ||
+     tx.sessionId!==state.sessionId || tx.round!==state.round || state.phase!=='analyzing'){
+    throw new CaptureCancelledError();
+  }
+  tx.heartbeatAt=Date.now();
+  return true;
+}
+async function awaitCaptureStep(tx,promise){
+  const value=await promise;
+  assertActiveCapture(tx);
+  return value;
+}
+function markCaptureCommitted(tx){
+  assertActiveCapture(tx);
+  tx.status='committed';
+  tx.heartbeatAt=Date.now();
+  state.pendingCapture=pendingCaptureSnapshot(tx);
+  tx.persisted=saveGameState()===true;
+  return tx.persisted;
+}
+async function awaitCapturePersistence(tx){
+  // 이미 선택한 판정은 메모리에 확정해 둔 채, 저장 성공 전에는 결과를 노출하지 않는다.
+  // 사용자가 저장 공간을 확보하거나 저장 재시도에 성공해도 같은 판정을 그대로 사용한다.
+  tx.awaitingPersistence=!tx.persisted;
+  if(tx.awaitingPersistence){
+    document.getElementById('btnReset').disabled=true;
+    document.getElementById('camHint').textContent='● 진행 내용을 저장하고 있습니다. 저장 안내를 확인해주세요.';
+  }
+  while(!tx.persisted){
+    await awaitCaptureStep(tx,sleep(2000));
+    tx.persisted=saveGameState()===true;
+  }
+  tx.awaitingPersistence=false;
+  document.getElementById('btnReset').disabled=!!state.shutterLockedThisRound;
+}
+function completeCaptureTxn(tx){
+  if(activeCaptureTxn!==tx)return;
+  clearCaptureWatchdog();
+  activeCaptureTxn=null;
+  state.pendingCapture=null;
+  saveGameState();
+}
+function restoreCaptureBefore(tx){
+  const before=tx.before||{};
+  state.captureUsed=Math.max(0,numberOr(tx.captureUsedBefore,state.captureUsed));
+  state.checkoutLastOutcome=before.checkoutLastOutcome??null;
+  state.roundTotal=Math.max(0,numberOr(before.roundTotal));
+  state.roundCount=Math.max(0,numberOr(before.roundCount));
+  state.cumulativeGrossTotal=Math.max(0,numberOr(before.cumulativeGrossTotal));
+  state.customerProgress=clonePlain(before.customerProgress,{});
+  state.voidedKeys=new Set(Array.isArray(before.voidedKeys)?before.voidedKeys:[]);
+  state.objects.forEach(o=>{
+    state.results[o.key]=typeof before.results?.[o.key]==='boolean' ? before.results[o.key] : null;
+  });
+}
+function resetCaptureVisuals(){
+  const overlay=document.getElementById('vfOverlay');
+  const fill=document.getElementById('vfFill');
+  if(overlay)overlay.style.display='none';
+  if(fill)fill.style.width='0%';
+  document.getElementById('btnShutter').classList.remove('go');
+  document.getElementById('liveProduct').classList.remove('show');
+}
+function recoverCaptureFailure(tx,reason){
+  if(!tx || activeCaptureTxn!==tx)return;
+  // 저장 실패 안내가 열려 있는 동안에는 이미 계산한 결과를 표시하거나 환급하지 않는다.
+  // 카메라가 끊겨도 저장 재시도를 계속하며, 저장이 끝나면 같은 결과의 연출만 진행한다.
+  if(tx.status==='committed' && tx.awaitingPersistence)return;
+  const committed=tx.status==='committed';
+  if(!committed)restoreCaptureBefore(tx);
+  captureEpoch++;
+  clearCaptureWatchdog();
+  activeCaptureTxn=null;
+  state.pendingCapture=null;
+  resetCaptureVisuals();
+  const live=isCameraStreamLive();
+  const video=document.getElementById('cameraVideo');
+  const frozen=document.getElementById('frozenCanvas');
+  if(!committed && live){
+    video.style.display='block';
+    frozen.style.display='none';
+    state.phase='camera';
+    startLiveDebug();
+  }else{
+    state.phase=committed?'done':'idle';
+  }
+  document.getElementById('btnReset').disabled=!committed || state.shutterLockedThisRound;
+  document.getElementById('topStatus').textContent=committed?'DONE':(live?'CAMERA ON':'STANDBY');
+  document.getElementById('camHint').textContent=committed
+    ? '● 계산 결과는 확정되었습니다. RESET을 눌러 계속하세요.'
+    : (live?'● 촬영 오류가 복구되었습니다. 같은 카드를 다시 촬영하세요.':'● 카메라가 끊어졌습니다. 카메라를 다시 연결하세요.');
+  setBadge(committed?'done':'idle');
+  renderObjList();renderScore();updateCaptureUI();updateCheckoutBar();
+  saveGameState();
+  showToast(committed
+    ? '계산 결과는 보존하고 화면만 복구했습니다'
+    : '촬영 오류로 사용 횟수를 복구했습니다. 다시 촬영해주세요','error');
+  console.log('[CAPTURE] recovered:',reason||'unknown');
+}
+function checkActiveCaptureStall(){
+  const tx=activeCaptureTxn;
+  if(!tx)return;
+  if(tx.awaitingPersistence)return;
+  const limit=tx.kind==='checkout'?12000:45000;
+  if(Date.now()-tx.heartbeatAt>limit)recoverCaptureFailure(tx,'watchdog-timeout');
+}
+function invalidateCaptureCallbacks(reason){
+  captureEpoch++;
+  clearCaptureWatchdog();
+  if(checkoutAutoFinishTimer){clearTimeout(checkoutAutoFinishTimer);checkoutAutoFinishTimer=null;}
+  activeCaptureTxn=null;
+  state.pendingCapture=null;
+  console.log('[CAPTURE] callbacks invalidated:',reason||'unknown');
+}
+function handleCaptureException(tx,error){
+  if(error instanceof CaptureCancelledError)return;
+  console.error('[CAPTURE] technical failure:',error);
+  recoverCaptureFailure(tx,error?.message||'exception');
 }
 
 // ── 캡처 (셔터) ──
 async function handleCapture(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   // 2026-08-16 추가: "고객 선택 → 체크아웃" 기능이 켜져 있으면(체크아웃 대상이 지정돼
   // 있으면) 실제 바코드/이미지/OCR 인식 파이프라인 전체를 건너뛰고 별도의 체크아웃
   // 캡처 경로로 넘어간다 — 세린님 지시: "카메라 찍는 연출은 그대로. 하지만 실제
@@ -3715,15 +4915,16 @@ async function handleCapture(){
   // 여기 아래 코드는 지금까지와 100% 동일하게 동작한다.
   if(state.checkoutTarget){ return handleCheckoutCapture(); }
   if(state.phase!=='camera')return;
+  if(!state.roundSetupComplete || roundAdvanceState!=='idle')return;
   // 2026-08-18 추가(세린님 지시): 1라운드 데이터카드 4장 초과 입력 확인 후 이번 라운드
   // 셔터가 잠긴 상태 — 버튼은 disabled로 막히지만 동일하게 한 번 더 확인한다.
   if(state.shutterLockedThisRound){ showToast('이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다','error'); return; }
   if(getRemainingCaptures()<=0){showToast('이번 라운드 캡처 횟수를 모두 사용했습니다','error');return;}
   if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
-  state.phase='analyzing';
-  state.captureUsed++;
+  const captureTxn=beginCaptureTxn('vision');
   updateCaptureUI();
 
+  try{
   const v=document.getElementById('cameraVideo');
   const fc=document.getElementById('frozenCanvas');
 
@@ -3749,7 +4950,7 @@ async function handleCapture(){
     const results=[];
     let bestCanvas=null, bestStruct=null, bestSharp=-Infinity;
     for(let bi=0;bi<BURST_N;bi++){
-      if(bi>0) await new Promise(res=>setTimeout(res,BURST_GAP_MS));
+      if(bi>0) await awaitCaptureStep(captureTxn,sleep(BURST_GAP_MS));
       fcx.drawImage(v,0,0,vw,vh);
       const r=scanStripe(fc);
       r.sharpness=estimateSharpness(fc);
@@ -3786,7 +4987,7 @@ async function handleCapture(){
     return {pattern:best, rep};
   }
 
-  let burstFrames=await captureBurstFrames();
+  let burstFrames=await awaitCaptureStep(captureTxn,captureBurstFrames());
   // 구조 정보가 잡힌 프레임이 하나도 선명하지 않았다면(또는 마커 자체를 못 찾았다면),
   // 캡처 횟수는 차감하지 않고 조용히 한 번 더 시도한다 — 더 선명하게 나온 쪽만 채택.
   // 2026-08-14 진단 추가: "원래보다 인식률이 떨어졌다"는 리포트 조사용. 이 재시도는
@@ -3800,7 +5001,7 @@ async function handleCapture(){
   const firstBurstSharp=burstFrames.bestSharp??-Infinity;
   let blurRetryInfo={triggered:false, firstSharp:Math.round(firstBurstSharp)};
   if(firstBurstSharp < BLUR_WARN_THRESHOLD){
-    const retryBurst=await captureBurstFrames();
+    const retryBurst=await awaitCaptureStep(captureTxn,captureBurstFrames());
     const retrySharp=retryBurst.bestSharp??-Infinity;
     const swapped=retrySharp>firstBurstSharp;
     blurRetryInfo={triggered:true, firstSharp:Math.round(firstBurstSharp), retrySharp:Math.round(retrySharp), swapped};
@@ -3884,7 +5085,7 @@ async function handleCapture(){
     const anchor1Src=burstFrames.bestCanvas||fc;
     let resolvedByOcr=false;
     if(anchor1Struct && anchor1Struct.leftEdge!=null && anchor1Struct.rightEdge!=null){
-      const ocr1=await computeOcrGuess(anchor1Src, anchor1Struct.leftEdge, anchor1Struct.rightEdge, anchor1Struct.scanYs, anchor1Struct.scanYe);
+      const ocr1=await awaitCaptureStep(captureTxn,computeOcrGuess(anchor1Src, anchor1Struct.leftEdge, anchor1Struct.rightEdge, anchor1Struct.scanYs, anchor1Struct.scanYe));
       if(ocr1){
         ocrInfo={top:ocr1.top, score:Number(ocr1.score.toFixed(2)), confident:ocr1.confident};
         if(ocr1.confident && ocr1.top===pattern){
@@ -3902,7 +5103,7 @@ async function handleCapture(){
       }
     }
     if(!resolvedByOcr){
-      const retryFrames=await captureBurstFrames();
+      const retryFrames=await awaitCaptureStep(captureTxn,captureBurstFrames());
       const retryVote=voteBurst(retryFrames.results);
       const dm2=checkDualMatch(retryVote, retryFrames);
       if(dm2.agree){
@@ -3917,7 +5118,7 @@ async function handleCapture(){
         const anchor2Struct=retryFrames.bestStruct||(retryVote.rep&&retryVote.rep.structural);
         const anchor2Src=retryFrames.bestCanvas||fc;
         if(anchor2Struct && anchor2Struct.leftEdge!=null && anchor2Struct.rightEdge!=null){
-          ocr2=await computeOcrGuess(anchor2Src, anchor2Struct.leftEdge, anchor2Struct.rightEdge, anchor2Struct.scanYs, anchor2Struct.scanYe);
+          ocr2=await awaitCaptureStep(captureTxn,computeOcrGuess(anchor2Src, anchor2Struct.leftEdge, anchor2Struct.rightEdge, anchor2Struct.scanYs, anchor2Struct.scanYe));
         }
         if(ocr2) ocrInfo={top:ocr2.top, score:Number(ocr2.score.toFixed(2)), confident:ocr2.confident};
         if(ocr2 && ocr2.confident && ocr2.top===retryVote.pattern){
@@ -3971,7 +5172,7 @@ async function handleCapture(){
           imageOnlyGuess={top:wcGuess.top, margin:Number(wcGuess.margin.toFixed(3)), confident:wcGuess.confident};
         }
         if(wcGuess && wcGuess.confident){
-          const ocrGuess=await computeOcrGuess(anchorSrc, anchorStruct.leftEdge, anchorStruct.rightEdge, anchorStruct.scanYs, anchorStruct.scanYe);
+          const ocrGuess=await awaitCaptureStep(captureTxn,computeOcrGuess(anchorSrc, anchorStruct.leftEdge, anchorStruct.rightEdge, anchorStruct.scanYs, anchorStruct.scanYe));
           if(ocrGuess){
             ocrInfo={top:ocrGuess.top, score:Number(ocrGuess.score.toFixed(2)), confident:ocrGuess.confident};
             if(ocrGuess.confident && ocrGuess.top===wcGuess.top){
@@ -4131,7 +5332,7 @@ async function handleCapture(){
     else if(s===1) state.results[obj.key]=detected.has(obj.key)&&(Math.random()<0.60);  // 1단계: 60%
     else           state.results[obj.key]=detected.has(obj.key);                         // 2단계: 100%
     renderObjList();
-    await sleep(180);
+    await awaitCaptureStep(captureTxn,sleep(180));
   }
 
   // ── 결산 판정: 다중상품(콤보) 카드는 "학습된 상품만이라도" 개별로 반영 ──
@@ -4163,6 +5364,9 @@ async function handleCapture(){
     state.cumulativeGrossTotal=(state.cumulativeGrossTotal||0)+captureAmount;
     state.roundCount=(state.roundCount||0)+detThisCapture.length;
   }
+  // 여기까지가 한 번의 촬영으로 확정되는 게임 결과다. 이후 화면 연출에 문제가 생겨도
+  // 같은 확률을 다시 뽑거나 촬영 횟수를 돌려주지 않는다.
+  markCaptureCommitted(captureTxn);
 
   overlay.style.display='none';
   document.getElementById('btnShutter').classList.remove('go');
@@ -4216,11 +5420,16 @@ async function handleCapture(){
     setBadge('done');
   }
   state.phase='done';
+  updateRoundAdvanceControls();
   // 라이브 상품 표시 제거 (캡처 완료 후 혼동 방지)
   document.getElementById('liveProduct').classList.remove('show');
   renderScore();
   saveGameState();
+  completeCaptureTxn(captureTxn);
   // 항상 정지 상태 유지 — RESET 버튼 누를 때 카메라 재활성화
+  }catch(error){
+    handleCaptureException(captureTxn,error);
+  }
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -4234,7 +5443,9 @@ async function handleCapture(){
 // 거의 동일하게 맞췄다 — 그쪽 결산 규칙이 바뀌면 이쪽도 같이 봐야 한다는 점만 유의.
 // ══════════════════════════════════════════════════════════════════
 async function handleCheckoutCapture(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
   if(state.phase!=='camera')return;
+  if(!state.roundSetupComplete || roundAdvanceState!=='idle')return;
   const code=state.checkoutTarget;
   if(!code)return;
   // 2026-08-16m 추가: 세린님 지시 — 셔터 버튼 자체가 disabled로 막히지만(updateShutterState),
@@ -4245,10 +5456,10 @@ async function handleCheckoutCapture(){
   if(state.shutterLockedThisRound){ showToast('이번 라운드는 촬영이 잠겼습니다 — 다음 라운드부터 다시 가능합니다','error'); return; }
   if(getRemainingCaptures()<=0){showToast('이번 라운드 캡처 횟수를 모두 사용했습니다','error');return;}
   if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
-  state.phase='analyzing';
-  state.captureUsed++;
+  const captureTxn=beginCaptureTxn('checkout');
   updateCaptureUI();
 
+  try{
   const v=document.getElementById('cameraVideo');
   const fc=document.getElementById('frozenCanvas');
   const vw=v.videoWidth||640, vh=v.videoHeight||480;
@@ -4272,32 +5483,27 @@ async function handleCheckoutCapture(){
   const fill=document.getElementById('vfFill');
   overlay.style.display='flex'; fill.style.width='0%';
 
-  await sleep(500); // 실제 판정과 무관한 "계산 중" 연출용 대기
-  // 2026-08-16j 추가: 계산(분석) 도중 RESET을 누르면 state.phase가 즉시 'camera'/'idle'로
-  // 바뀌는데, 이 비동기 함수가 그걸 모른 채 계속 진행하면 RESET 이후에도 뒤늦게 "SCANNING"
-  // 등 화면 문구를 덮어써버리는 버그가 있었다(세린님 리포트) — RESET으로 이미 analyzing이
-  // 풀렸다면 여기서 조용히 중단한다.
-  if(state.phase!=='analyzing') return;
+  await awaitCaptureStep(captureTxn,sleep(500)); // 실제 판정과 무관한 "계산 중" 연출용 대기
 
   const detectedProducts=(CUSTOMER_CATALOG[code]?CUSTOMER_CATALOG[code].products:(PATTERN_MAP[code]||[]));
   const detected=new Set(detectedProducts);
+  // 확률 판정은 화면 애니메이션 전에 정확히 한 번만 계산한다. 중간 렌더링 오류나 재접속이
+  // 발생해도 이미 본 결과를 다시 추첨하지 않는다.
+  const outcomeResults={};
+  state.objects.forEach(obj=>{
+    const stage=getStage(obj.key);
+    if(stage===0) outcomeResults[obj.key]=false;
+    else if(stage===1) outcomeResults[obj.key]=detected.has(obj.key)&&(Math.random()<0.60);
+    else outcomeResults[obj.key]=detected.has(obj.key);
+  });
   const custTitle=CUSTOMER_CATALOG[code]?CUSTOMER_CATALOG[code].title:code;
   document.getElementById('rgbDebug').textContent=
     `CHECKOUT: ${custTitle}(${code}) → [${detectedProducts.map(k=>{const o=state.objects.find(o=>o.key===k);return o?o.displayName:k;}).join('/')}] (고객 선택 기반 확률 판정 — 실제 촬영 인식 아님)`;
 
-  const total=state.objects.length;
-  for(let i=0;i<total;i++){
-    if(state.phase!=='analyzing') return; // 2026-08-16j 추가: 루프 도중 RESET되면 즉시 중단
-    fill.style.width=Math.round(((i+1)/total)*100)+'%';
-    const obj=state.objects[i];
-    const s=getStage(obj.key);
-    if(s===0)      state.results[obj.key]=false;
-    else if(s===1) state.results[obj.key]=detected.has(obj.key)&&(Math.random()<0.60);
-    else           state.results[obj.key]=detected.has(obj.key);
-    renderObjList();
-    await sleep(180);
-  }
-  if(state.phase!=='analyzing') return; // 2026-08-16j 추가: 마지막 반복 직후 RESET된 경우도 방지
+  assertActiveCapture(captureTxn);
+  // 화면에 상품별 성공/실패를 표시하기 전에 판정·매출·촬영 횟수를 한 저장본으로 확정한다.
+  // 애니메이션 도중 새로고침해도 확정된 판정을 복원하므로 결과를 다시 뽑을 수 없다.
+  state.results={...state.results,...outcomeResults};
 
   // 2026-08-16k 추가: "처리 고객 현황" 기록 — 이번 촬영에서 성공(인식 완료)한 상품 key만
   // 고객카드별로 누적 기록한다(한 번 성공하면 계속 성공한 것으로 유지 — 재촬영으로 실패해도
@@ -4316,6 +5522,7 @@ async function handleCheckoutCapture(){
   }
   // 2026-08-16b 추가: "결제 완료" 시 신뢰도-1 판정에 쓰기 위해 이번 촬영 결과를 기억해둠
   state.checkoutLastOutcome = settleFailed ? 'failed' : (settlePartial ? 'partial' : 'complete');
+  updateRoundAdvanceControls();
   {
     const detThisCapture=state.objects.filter(o=>state.results[o.key]===true);
     const captureAmount=detThisCapture.reduce((s,o)=>s+Number(o.price),0);
@@ -4324,6 +5531,17 @@ async function handleCheckoutCapture(){
     state.cumulativeGrossTotal=(state.cumulativeGrossTotal||0)+captureAmount;
     state.roundCount=(state.roundCount||0)+detThisCapture.length;
   }
+  markCaptureCommitted(captureTxn);
+  await awaitCapturePersistence(captureTxn);
+
+  renderObjList();
+  const total=state.objects.length;
+  for(let i=0;i<total;i++){
+    assertActiveCapture(captureTxn);
+    fill.style.width=Math.round(((i+1)/total)*100)+'%';
+    await awaitCaptureStep(captureTxn,sleep(180));
+  }
+  assertActiveCapture(captureTxn);
 
   overlay.style.display='none';
   document.getElementById('btnShutter').classList.remove('go');
@@ -4350,20 +5568,30 @@ async function handleCheckoutCapture(){
     showToast('🎉 계산 완료!','unlock2');
   }
   state.phase='done';
+  updateRoundAdvanceControls();
   document.getElementById('liveProduct').classList.remove('show');
   renderScore();
   saveGameState();
   updateCheckoutBar();
+  completeCaptureTxn(captureTxn);
   // 2026-08-16f 추가: 모든 상품이 정상 결제완료됐으면 더 고를 게 없으므로(포기/재시도/완료
   // 버튼 자체가 무의미) 짧게 "DONE" 상태를 보여준 뒤 자동으로 다음 고객으로 넘어간다.
   // 그 사이 카드가 다른 줄로 이동되는 등으로 checkoutTarget이 바뀌었으면 자동완료하지 않는다.
   if(state.checkoutLastOutcome==='complete'){
     const targetAtCapture=code;
-    setTimeout(()=>{
-      if(state.checkoutTarget===targetAtCapture && state.checkoutLastOutcome==='complete'){
+    const sessionAtCapture=state.sessionId;
+    const roundAtCapture=state.round;
+    if(checkoutAutoFinishTimer)clearTimeout(checkoutAutoFinishTimer);
+    checkoutAutoFinishTimer=setTimeout(()=>{
+      checkoutAutoFinishTimer=null;
+      if(state.sessionId===sessionAtCapture && state.round===roundAtCapture &&
+         state.checkoutTarget===targetAtCapture && state.checkoutLastOutcome==='complete'){
         finishCheckout();
       }
     }, 700);
+  }
+  }catch(error){
+    handleCaptureException(captureTxn,error);
   }
 }
 
@@ -4437,6 +5665,23 @@ function copyBandDetail(){
 
 // ── RESET ──
 function handleReset(){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  if(activeCaptureTxn?.awaitingPersistence){
+    showToast('진행 내용 저장을 먼저 완료해주세요. 판정 결과는 그대로 보존됩니다.','error');
+    return;
+  }
+  // 완전 결제로 이미 매출이 확정된 고객은 RESET으로 같은 결과를 다시 촬영하게 두지 않고
+  // 기존 자동 완료를 즉시 마무리한다.
+  if(state.checkoutTarget && state.checkoutLastOutcome==='complete'){
+    if(checkoutAutoFinishTimer){clearTimeout(checkoutAutoFinishTimer);checkoutAutoFinishTimer=null;}
+    invalidateCaptureCallbacks('complete-capture-reset');
+    resetCaptureVisuals();
+    finishCheckout();
+    return;
+  }
+  // 사용자가 정상적으로 RESET한 경우에는 촬영 횟수를 돌려주지 않는다. 진행 중인 비동기
+  // 콜백만 무효화해 RESET 뒤에 이전 결과가 화면/점수에 뒤늦게 반영되지 않게 한다.
+  invalidateCaptureCallbacks('user-reset');
   if(debugTimer){clearInterval(debugTimer);debugTimer=null;}
   if(state.cameraStream){
     document.getElementById('cameraVideo').style.display='block';
@@ -4455,9 +5700,12 @@ function handleReset(){
     ?`● 카드 하단을 프레임 끝까지 내린 후 촬영하세요. (잔여 ${getRemainingCaptures()}회)`
     :'카메라 시작 버튼을 눌러주세요.';
   document.getElementById('topStatus').textContent=state.cameraStream?'CAMERA ON':'STANDBY';
+  document.getElementById('vfOverlay').style.display='none';
   document.getElementById('vfFill').style.width='0%';
   setBadge('idle');renderObjList();renderScore();
   updateShutterState();
+  updateRoundAdvanceControls();
+  saveGameState();
 }
 
 // ── 코드 입력 자동 하이픈 ──
@@ -4531,10 +5779,11 @@ let pendingFinishCalcCode=null;
 function confirmFinishCalcEntry(){
   document.getElementById('finishCalcConfirmOverlay').style.display='none';
   state.finishCalcPromptShownThisRound=true;
-  if(!pendingFinishCalcCode)return;
+  if(!pendingFinishCalcCode){saveGameState();return;}
   const pending=pendingFinishCalcCode;
   pendingFinishCalcCode=null;
   state.shutterLockedThisRound=true;
+  state.shutterLockReason='late-code';
   if(pending.kind==='boost') doApplyBoostCode(pending.code, pending.type);
   else doApplyDataCode(pending.code, pending.key);
 }
@@ -4542,8 +5791,11 @@ function cancelFinishCalcEntry(){
   document.getElementById('finishCalcConfirmOverlay').style.display='none';
   state.finishCalcPromptShownThisRound=true;
   pendingFinishCalcCode=null;
+  saveGameState();
 }
 function doApplyBoostCode(code, type){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  lockPreviousRoundRecovery('강화카드를 등록했습니다.');
   const input=document.getElementById('codeInput');
   const fb=document.getElementById('codeFeedback');
   state.usedCodes.add(code);
@@ -4566,6 +5818,8 @@ function doApplyBoostCode(code, type){
   }
 }
 function doApplyDataCode(code, key){
+  if(saveFailureActive || previousRoundConfirmOpen)return;
+  lockPreviousRoundRecovery('학습 데이터카드를 등록했습니다.');
   const input=document.getElementById('codeInput');
   const fb=document.getElementById('codeFeedback');
   state.usedCodes.add(code);
@@ -4697,8 +5951,17 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 // 2026-08-16k 추가: 표지 화면 "시작하기" 버튼 — 표지 뒤에서는 boot()가 이미 평소대로
 // 진행되고 있으므로(로딩 화면 → 연습 모드), 단순히 표지만 걷어내면 된다.
 function closeCoverScreen(){
+  if(!bootReady){
+    coverStartRequested=true;
+    const btn=document.querySelector('.btn-cover-start');
+    if(btn){btn.disabled=true;btn.textContent='준비 중...';}
+    return;
+  }
+  if(sessionChoiceShown)return;
+  sessionChoiceShown=true;
   const el=document.getElementById('coverScreen');
   if(el) el.style.display='none';
+  showResumeGamePrompt();
 }
 window.addEventListener('DOMContentLoaded',boot);
 
