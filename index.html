@@ -2766,6 +2766,16 @@ function confirmLineAssign(){
     state.roundSetupComplete=true;
     updateRoundAdvanceControls();
   }
+  if(laMode==='swap' && wasRoundStart){
+    // 정산 화면의 빨간색 '완료'를 확정한 시점에만 촬영을 잠근다.
+    // 인원 초과 검사를 통과하기 전이나 화면을 열고 취소한 경우에는 잠그지 않는다.
+    state.shutterLockedThisRound=true;
+    state.shutterLockReason='settlement';
+    state.settlementVisitedThisRound=true;
+    updateRoundAdvanceControls();
+    updateShutterState();
+    document.getElementById('btnReset').disabled=true;
+  }
   laRoundStartPending=false;
   closeLineAssign();
   if(wasDraw) promptCheckoutTarget();
@@ -4546,16 +4556,8 @@ function nextRound(){
   }
   if(laMode==='swap'){
     lockPreviousRoundRecovery('정산을 시작했습니다.');
-    // 2026-08-19 추가(세린님 지시): "정산" 버튼을 누르면 이번 라운드 카메라(셔터)와 RESET
-    // 버튼을 비활성화한다 — 다음 라운드로 넘어가야(advanceToNextRound) 다시 활성화된다.
-    // ("다음 라운드" 버튼 자체는 계속 눌러야 하므로 건드리지 않는다.)
-    // (분석 중이라 openLineAssign이 막혀 화면이 안 열렸으면 잠그지 않는다.)
-    state.shutterLockedThisRound=true;
-    state.shutterLockReason='settlement';
-    state.settlementVisitedThisRound=true;
-    updateRoundAdvanceControls();
-    updateShutterState();
-    document.getElementById('btnReset').disabled=true;
+    // 화면을 열기만 한 상태에서는 정산을 확정하지 않는다. 촬영 잠금과 다음 라운드
+    // 이동 허용은 confirmLineAssign()의 빨간색 '완료'에서 함께 확정한다.
     saveGameState();
   }
   document.getElementById('laHint').textContent = state.round>=5
