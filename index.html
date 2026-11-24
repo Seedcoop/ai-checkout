@@ -1633,9 +1633,7 @@ function restoreSavedFlow(){
       return;
     }
     if(!state.roundSetupComplete){startRoundCustomerDraw(state.round);return;}
-    if(!state.checkoutTarget && pendingCustomerCards().length>0 && getRemainingCaptures()>0){
-      promptCheckoutTarget();
-    }
+    ensureFrontCheckoutTarget();
   }finally{
     isRestoringState=false;
   }
@@ -2057,6 +2055,22 @@ function promptCheckoutTarget(){
   renderMyCustomerQueue();
   updateShutterState();
   saveGameState();
+}
+
+// AI 줄이 바뀐 뒤 현재 계산 대상이 비어 있으면 맨 앞 고객을 자동 지정한다.
+// 이미 표시한 촬영 결과와 기존 잠금은 그대로 두고, 계산 준비 상태에서만 보정한다.
+function ensureFrontCheckoutTarget(){
+  if(saveFailureActive || previousRoundConfirmOpen || roundAdvanceState!=='idle')return false;
+  if(!state.roundSetupComplete || state.shutterLockedThisRound || getRemainingCaptures()<=0)return false;
+  if(cpMode || laMode || state.phase==='analyzing' || activeCaptureTxn || state.checkoutLastOutcome)return false;
+  const front=pendingCustomerCards()[0];
+  if(!front || state.checkoutTarget===front.code)return false;
+  state.checkoutTarget=front.code;
+  enterCheckoutCameraReady();
+  renderMyCustomerQueue();
+  updateShutterState();
+  saveGameState();
+  return true;
 }
 
 // ── ③ 고객카드 구매(비밀번호 게이트) ──
@@ -2796,6 +2810,8 @@ function confirmLineAssign(){
     } else {
       showRoundSettlePopup(state.roundTotal||0);
     }
+  } else {
+    ensureFrontCheckoutTarget();
   }
 }
 function clearAllToasts(){
@@ -2808,6 +2824,7 @@ function cancelRoundStartLineAssign(){
   if(!(laMode==='swap' && laRoundStartPending)) return;
   laRoundStartPending=false;
   closeLineAssign();
+  ensureFrontCheckoutTarget();
 }
 function onClickSwapLines(){
   if(state.phase==='analyzing'){ showToast('촬영/분석 중에는 줄을 교체할 수 없어요','error'); return; }
@@ -3930,7 +3947,7 @@ async function startCamera(){
     cameraBtn.textContent='카메라 재연결';
     document.getElementById('topStatus').textContent='CAMERA ON';
     state.phase='camera';
-    startLiveDebug();
+    if(!ensureFrontCheckoutTarget())startLiveDebug();
     document.getElementById('camHint').textContent='● 카드 하단을 프레임 끝까지 내린 후 촬영하세요.';
     updateShutterState();
     // 2026-08-15b: OCR 3중 교차검증에 쓸 Tesseract.js를 카메라 시작 시점에 백그라운드로
