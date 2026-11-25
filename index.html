@@ -2329,7 +2329,7 @@ function confirmCustomerPicker(){
     // 2026-08-18 변경(세린님 지시): "이하"가 아니라 정확히 일치해야 확인 가능(버튼이 이미 disabled라 정상 흐름에선 못 옴)
     if(cpSelected.single.size!==single || cpSelected.multi.size!==multi)return;
   }
-  lockPreviousRoundRecovery('새 라운드 고객 선택을 완료했습니다.');
+  // 라운드 기본 고객 선택과 최초 배치만으로는 이전 라운드 복귀를 잠그지 않는다.
   const newCodes=[...cpSelected.single, ...cpSelected.multi];
   closeCustomerPicker();
   // 2026-08-16d 변경: 이제 뽑힌 고객을 곧바로 AI계산대 줄에 넣지 않고, "줄 배치" 화면에서
@@ -2725,7 +2725,8 @@ function moveLaCard(code, fromZone, toZone){
       return;
     }
   }
-  lockPreviousRoundRecovery('고객카드 배치를 변경했습니다.');
+  if(!(laMode==='draw' && laDrawOrigin?.mode==='roundDraw'))
+    lockPreviousRoundRecovery('고객카드 배치를 변경했습니다.');
   if(fromZone==='staging'){
     laStagingCodes=laStagingCodes.filter(c=>c!==code);
   } else if(fromZone==='ai'){
